@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F0C29,50:302B63,100:24243e&height=230&section=header&text=WhistleZero&fontSize=68&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Anonymous%20Whistleblower%20Network%20%E2%80%94%20Built%20on%20Midnight%20%26%20Compact&descAlignY=58&descSize=18&descColor=D6C9FF" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0F0C29,50:302B63,100:24243e&height=230&section=header&text=WhistleZero&fontSize=68&fontColor=ffffff&animation=fadeIn&fontAlignY=38&desc=Anonymous%20Whistleblower%20Network%20%E2%80%94%20Built%20on%20Midnight%20and%20Compact&descAlignY=58&descSize=18&descColor=D6C9FF" width="100%"/>
 
 <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&weight=500&size=22&duration=2800&pause=900&color=A78BFA&center=true&vCenter=true&width=750&lines=Prove+report+authorization.;Reveal+nothing+about+who+you+are.;Zero-Knowledge+%7C+Midnight+Network+%7C+Compact;Built+for+judges+who+verify%2C+not+just+trust." alt="Typing SVG" />
 
