@@ -1,0 +1,32 @@
+{
+  "name": "whistlezero-anonymous-network",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "WhistleZero — Anonymous Whistleblower Network built on Midnight Network",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "compile": "compact compile contracts/counter.compact managed/",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "deploy": "echo 'Run: NODE_OPTIONS=\"--max-old-space-size=12288\" npm run deploy -- --network preprod'"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.475.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "typescript": "^5.7.3",
+    "vite": "^6.1.0",
+    "vitest": "^3.0.5"
+  }
+}
