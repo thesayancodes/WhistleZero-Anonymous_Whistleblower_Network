@@ -19,13 +19,12 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tailwind-merge": "^3.0.1",
+    "@midnight-ntwrk/midnight-js-network-provider": "file:managed/stubs/midnight-js-network-provider",
     "@midnight-ntwrk/dapp-connector-api": "^4.0.1",
-    "@midnight-ntwrk/midnight-js": "^4.1.1",
     "@midnight-ntwrk/compact-runtime": "^0.16.0",
-    "@midnight-ntwrk/midnight-js-network-provider": "npm:@midnight-ntwrk/midnight-js@^4.1.1",
-    "@midnight-ntwrk/midnight-js-contracts": "npm:@midnight-ntwrk/midnight-js@^4.1.1",
-    "@midnight-ntwrk/midnight-js-types": "npm:@midnight-ntwrk/midnight-js@^4.1.1",
-    "@midnight-ntwrk/zswap": "npm:@midnight-ntwrk/midnight-js@^4.1.1"
+    "@midnight-ntwrk/midnight-js-contracts": "file:managed/stubs/midnight-js-contracts",
+    "@midnight-ntwrk/midnight-js-types": "file:managed/stubs/midnight-js-types",
+    "@midnight-ntwrk/zswap": "file:managed/stubs/zswap"
   },
   "devDependencies": {
     "@types/node": "^22.13.0",

@@ -1,0 +1,6 @@
+{
+  "name": "@midnight-ntwrk/midnight-js-contracts",
+  "version": "1.0.0",
+  "description": "Midnight Contracts Package Stub for WhistleZero",
+  "main": "index.js"
+}

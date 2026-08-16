@@ -1,0 +1,6 @@
+{
+  "name": "@midnight-ntwrk/zswap",
+  "version": "1.0.0",
+  "description": "Midnight ZSwap Package Stub for WhistleZero",
+  "main": "index.js"
+}
