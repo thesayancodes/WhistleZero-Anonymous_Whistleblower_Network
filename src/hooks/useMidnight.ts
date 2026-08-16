@@ -1,4 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
+import {
+  connectLaceWallet,
+  getMidnightNetworkProvider,
+  submitZKReportTransaction,
+  DEFAULT_MIDNIGHT_CONFIG
+} from '../midnight/connector';
 
 export interface WalletState {
   isConnected: boolean;
@@ -59,42 +65,23 @@ export const useMidnight = () => {
     }
   ]);
 
-  // Connect to Lace Wallet
+  // Connect to Lace Wallet using Midnight SDK DApp Connector API
   const connectWallet = useCallback(async () => {
     setWallet((prev) => ({ ...prev, isConnecting: true, error: null }));
     try {
-      // Simulate Lace DApp connector check
-      const windowObj = window as any;
-      if (!windowObj.midnight && !windowObj.lace) {
-        // Fallback demo connection if Lace extension not detected
-        await new Promise((resolve) => setTimeout(resolve, 800));
-        setWallet({
-          isConnected: true,
-          isConnecting: false,
-          address: 'mn_preprod1q9x24k5m4z6p8w0v3y1a2b3c4d5e6f7g8h9j0',
-          network: 'Preprod',
-          error: null
-        });
-        return;
-      }
-
-      // Real Lace API call if injected
-      const laceApi = windowObj.midnight?.lace || windowObj.lace;
-      const api = await laceApi.enable();
-      const addresses = await api.getAddresses();
-      
+      const session = await connectLaceWallet(DEFAULT_MIDNIGHT_CONFIG);
       setWallet({
-        isConnected: true,
+        isConnected: session.isConnected,
         isConnecting: false,
-        address: addresses[0] || 'mn_preprod1q9x24k5m4z6p8w0v3y1a2b3c4d5e6f7g8h9j0',
-        network: 'Preprod',
+        address: session.address,
+        network: session.networkId === 'preprod' ? 'Preprod' : 'Preview',
         error: null
       });
     } catch (err: any) {
       setWallet((prev) => ({
         ...prev,
         isConnecting: false,
-        error: err?.message || 'Failed to connect Lace wallet. User rejected or wallet not found.'
+        error: err?.message || 'Failed to connect Lace wallet via Midnight DApp Connector API.'
       }));
     }
   }, []);
@@ -110,7 +97,7 @@ export const useMidnight = () => {
     });
   }, []);
 
-  // Submit Anonymous Whistleblower Circuit Call
+  // Submit Anonymous Whistleblower Report via Midnight SDK Proof Provider
   const submitAnonymousReportCircuit = useCallback(
     async (category: string, evidenceText: string, credentialSecret: string) => {
       if (!credentialSecret.trim()) {
@@ -120,23 +107,32 @@ export const useMidnight = () => {
         throw new Error('Report evidence content cannot be empty');
       }
 
-      // 1. Generate evidence hash commitment locally
+      // 1. Generate evidence hash commitment locally using SHA-256
       const encoder = new TextEncoder();
       const data = encoder.encode(evidenceText);
       const hashBuffer = await crypto.subtle.digest('SHA-256', data);
       const hashArray = Array.from(new Uint8Array(hashBuffer));
       const computedHash = '0x' + hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
 
-      // 2. Simulate Local ZK Proof Generation (Browser side proof-server execution)
-      await new Promise((resolve) => setTimeout(resolve, 3200));
+      // Map category string to category code
+      const categoryMap: Record<string, number> = {
+        Corruption: 1,
+        Fraud: 2,
+        Harassment: 3,
+        'Financial Manipulation': 4,
+        'Government Misconduct': 5
+      };
+      const categoryCode = categoryMap[category] || 1;
 
-      const newTxHash = `0xzk_${Math.random().toString(16).substring(2, 18)}`;
+      // 2. Execute ZK proof & contract transaction via Midnight SDK
+      const zkTx = await submitZKReportTransaction(categoryCode, computedHash, credentialSecret);
+
       const newTx: ReportTransaction = {
-        txHash: newTxHash,
+        txHash: zkTx.txHash,
         evidenceHash: computedHash,
         category,
         timestamp: 'Just now',
-        blockHeight: 1842100 + ledger.reportCount
+        blockHeight: zkTx.blockHeight + ledger.reportCount
       };
 
       // 3. Update public ledger state
@@ -148,7 +144,7 @@ export const useMidnight = () => {
       setRecentReports((prev) => [newTx, ...prev]);
 
       return {
-        txHash: newTxHash,
+        txHash: zkTx.txHash,
         evidenceHash: computedHash
       };
     },
