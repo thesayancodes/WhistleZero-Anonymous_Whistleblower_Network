@@ -11,7 +11,8 @@ import {
   Layers,
   FileCheck,
   UploadCloud,
-  Check
+  Check,
+  Globe
 } from 'lucide-react';
 import { WalletState } from '../hooks/useMidnight';
 
@@ -43,10 +44,10 @@ export const SubmitReportView: React.FC<SubmitReportViewProps> = ({ onCallCircui
 
   const steps = [
     { title: '1. Private Witness Constraint Vector', desc: 'Encoding employee secret witness into ZK domain' },
-    { title: '2. Local Proof Server Execution', desc: 'Generating SNARK proof locally on port 6300' },
+    { title: '2. Local Proof Server Execution', desc: 'Generating SNARK proof locally via Midnight Proof Server' },
     { title: '3. Compact Circuit Verification', desc: 'Evaluating submit_anonymous_report() logic' },
     { title: '4. Selective Disclosure Hash', desc: 'Executing disclose(report_content_hash)' },
-    { title: '5. Preprod On-Chain Confirmation', desc: 'Broadcasting evidence commitment to Midnight' }
+    { title: '5. Preprod On-Chain Confirmation', desc: 'Broadcasting evidence commitment to Midnight Network' }
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -112,10 +113,18 @@ export const SubmitReportView: React.FC<SubmitReportViewProps> = ({ onCallCircui
           </p>
         </div>
 
-        {/* Mandatory Label Badge */}
-        <div className="badge-privacy glow-pulse">
-          <ShieldCheck className="w-4 h-4" />
-          <span>Proved without revealing your input</span>
+        <div className="flex items-center gap-3">
+          {/* SDK Status Badge */}
+          <div className="flex items-center gap-1.5 text-xs font-mono text-indigo-300 bg-indigo-950/60 px-3 py-1.5 rounded-lg border border-indigo-500/30">
+            <Globe className="w-3.5 h-3.5 text-indigo-400" />
+            <span>@midnight-ntwrk/midnight-js SDK Active</span>
+          </div>
+
+          {/* Mandatory Privacy Label Badge */}
+          <div className="badge-privacy glow-pulse">
+            <ShieldCheck className="w-4 h-4" />
+            <span>Proved without revealing your input</span>
+          </div>
         </div>
       </div>
 
@@ -166,7 +175,7 @@ export const SubmitReportView: React.FC<SubmitReportViewProps> = ({ onCallCircui
                 className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-xs text-white font-mono placeholder-gray-600 focus:outline-none focus:border-indigo-500 transition"
               />
               <p className="text-[11px] text-gray-500 mt-1">
-                🔒 Evaluated locally inside the browser ZK proof server. Never sent to any server or on-chain ledger.
+                🔒 Evaluated locally inside browser ZK proof server. Never sent to any server or on-chain ledger.
               </p>
             </div>
 
@@ -201,7 +210,7 @@ export const SubmitReportView: React.FC<SubmitReportViewProps> = ({ onCallCircui
               {isGeneratingProof ? (
                 <>
                   <Cpu className="w-4 h-4 animate-spin text-indigo-300" />
-                  <span>Generating Local ZK Proof...</span>
+                  <span>Generating Local ZK Proof via Midnight SDK...</span>
                 </>
               ) : (
                 <>
@@ -226,7 +235,7 @@ export const SubmitReportView: React.FC<SubmitReportViewProps> = ({ onCallCircui
               <Cpu className="w-4 h-4 text-indigo-400" />
               ZK Proof Lifecycle Tracker
             </h3>
-            <p className="text-xs text-gray-400 mb-5">Real-time local prover status (port 6300)</p>
+            <p className="text-xs text-gray-400 mb-5">Midnight Network Provider Status</p>
 
             {/* Stepper list */}
             <div className="space-y-4 relative">
