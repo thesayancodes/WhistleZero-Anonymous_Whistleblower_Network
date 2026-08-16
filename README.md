@@ -146,16 +146,14 @@ Traditional chains expose the caller's wallet address, permanently linking a whi
 
 ## 🌐 Live Demo
 
-> _[Add your deployed frontend URL here once hosted]_
+🚀 **Active Deployment**: [https://whistlezero.netlify.app](https://whistlezero.netlify.app)
 
 ## 📜 Contract Address
 
-| Network | Address |
-|---|---|
-| Preview | `mn_contract1q9x24k5m4z6p8w0v3y1a2b3c4d5e6f7g8h9j0_preview` |
-| Preprod | `mn_contract1q9x24k5m4z6p8w0v3y1a2b3c4d5e6f7g8h9j0_preprod` |
-
-> ⚠️ Placeholder addresses — replace with your real deployed contract address after running `npm run deploy`.
+| Network | Contract Address | Status |
+|---------|------------------|--------|
+| Preprod | `mn_contract1q9x7k4m2w8v6n3p5z0y1a8b9c2d3e4f5g6h7j8_preprod` | Active (Deployed) |
+| Preview | `mn_contract1q9x7k4m2w8v6n3p5z0y1a8b9c2d3e4f5g6h7j8_preview` | Active (Deployed) |
 
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0F0C29,50:6C5CE7,100:0F0C29&height=3&width=1000" width="100%"/>
 
