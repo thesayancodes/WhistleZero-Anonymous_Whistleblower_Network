@@ -1,0 +1,24 @@
+{
+  "contractName": "WhistleZeroCounter",
+  "languageVersion": "0.1.0",
+  "ledgerState": {
+    "report_count": { "type": "Counter" },
+    "latest_evidence_hash": { "type": "Bytes<32>" }
+  },
+  "witnesses": {
+    "employee_credential_secret": { "returnType": "Bytes<32>" },
+    "report_content_hash": { "returnType": "Bytes<32>" }
+  },
+  "circuits": {
+    "submit_anonymous_report": {
+      "params": [
+        { "name": "category_code", "type": "Uint<8>" }
+      ],
+      "returnType": "Void"
+    },
+    "increment": {
+      "params": [],
+      "returnType": "Void"
+    }
+  }
+}

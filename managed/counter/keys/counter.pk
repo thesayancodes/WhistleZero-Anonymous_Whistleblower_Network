@@ -1,0 +1,7 @@
+MIDNIGHT_COMPACT_PROVING_KEY_V1
+circuit: submit_anonymous_report
+hash: 0x9a8f4c2e1b0d3e5f7a9b8c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f
+proving_system: plonk_halo2_midnight
+params_size: 16384
+witness_inputs: [employee_credential_secret, report_content_hash]
+disclosed_outputs: [category_code, latest_evidence_hash]
