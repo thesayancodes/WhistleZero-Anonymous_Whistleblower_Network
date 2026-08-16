@@ -50,9 +50,10 @@ export async function connectLaceWallet(config: MidnightConfig = DEFAULT_MIDNIGH
 
   try {
     const isEnabled = await laceConnector.isEnabled?.();
-    const walletApi: DAppConnectorWalletAPI = isEnabled
-      ? await laceConnector.enable?.()
-      : await laceConnector.connect?.(config.networkId as NetworkId);
+    const walletApi: DAppConnectorWalletAPI =
+      (isEnabled
+        ? await laceConnector.enable?.()
+        : await laceConnector.connect?.(config.networkId as NetworkId)) || ({} as DAppConnectorWalletAPI);
 
     const addresses = await walletApi.getAddresses?.();
     const primaryAddress = addresses?.[0] || 'mn_preprod1q9x7k4m2w8v6n3p5z0y1a8b9c2d3e4f5g6h7j8';
