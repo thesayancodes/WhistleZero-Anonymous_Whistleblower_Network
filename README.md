@@ -10,7 +10,7 @@
 
 <br/>
 
-[![CI](https://github.com/thesayancodes/WhistleZero-Anonymous_Whistleblower_Network/actions/workflows/ci.yml/badge.svg)](https://github.com/thesayancodes/WhistleZero-Anonymous_Whistleblower_Network/actions/workflows/ci.yml)
+[![CI/CD Pipeline](https://github.com/thesayancodes/WhistleZero-Anonymous_Whistleblower_Network/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/thesayancodes/WhistleZero-Anonymous_Whistleblower_Network/actions/workflows/ci.yml)
 ![Zero-Knowledge](https://img.shields.io/badge/privacy-zero--knowledge-9146FF?style=for-the-badge)
 ![Network](https://img.shields.io/badge/network-Midnight-1E2327?style=for-the-badge)
 ![Compact](https://img.shields.io/badge/contracts-Compact-6C5CE7?style=for-the-badge)
