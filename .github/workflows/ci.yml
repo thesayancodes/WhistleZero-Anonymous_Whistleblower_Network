@@ -20,7 +20,9 @@ jobs:
           node-version: '22'
 
       - name: 3. Install dependencies
-        run: npm install --legacy-peer-deps
+        run: |
+          npm install --legacy-peer-deps
+          chmod -R +x node_modules/.bin || true
 
       - name: 4. Verify & Validate Compact Smart Contract Artifacts
         run: |
@@ -42,7 +44,11 @@ jobs:
           fi
 
       - name: 5. Run test suite
-        run: npm test
+        run: |
+          chmod -R +x node_modules/.bin || true
+          npx vitest run
 
       - name: 6. Build production frontend
-        run: npm run build
+        run: |
+          chmod -R +x node_modules/.bin || true
+          npm run build
