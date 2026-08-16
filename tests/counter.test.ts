@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
+import contractSchema from '../managed/counter/contract/counter.compact.json';
 
 // WhistleZero Contract Simulation & ZK Circuit Test Suite
 // Verifies circuit logic, state transitions, and zero-knowledge privacy guarantees.
@@ -69,6 +70,14 @@ describe('WhistleZero Contract & ZK Circuit Tests', () => {
 
   beforeEach(() => {
     contract = new WhistleZeroCircuitSimulator();
+  });
+
+  it('0. Compact Compiled Schema: verifies contract schema matches WhistleZero specification', () => {
+    expect(contractSchema.contractName).toBe('WhistleZeroCounter');
+    expect(contractSchema.circuits).toHaveProperty('submit_anonymous_report');
+    expect(contractSchema.circuits).toHaveProperty('increment');
+    expect(contractSchema.ledgerState).toHaveProperty('report_count');
+    expect(contractSchema.ledgerState).toHaveProperty('latest_evidence_hash');
   });
 
   it('1. Circuit Logic: computes evidence hash commitment and validates credential', () => {
