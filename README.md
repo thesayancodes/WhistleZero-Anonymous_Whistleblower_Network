@@ -146,8 +146,7 @@ Traditional chains expose the caller's wallet address, permanently linking a whi
 
 ## 🌐 Live Demo
 
-🚀 **Active Live Preview**: [https://chatty-rooms-cross.loca.lt](https://chatty-rooms-cross.loca.lt)  
-🌐 **Production Web Application**: [https://whistlezero.netlify.app](https://whistlezero.netlify.app)
+🚀 **Active Live Web Application**: [https://thesayancodes.github.io/WhistleZero-Anonymous_Whistleblower_Network/](https://thesayancodes.github.io/WhistleZero-Anonymous_Whistleblower_Network/)
 
 ## 📜 Contract Address
 
