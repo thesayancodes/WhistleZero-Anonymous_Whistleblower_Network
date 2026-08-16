@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+build/
+
+# Vite / Vitest cache
+.vite/
+
+# Local environment & logs
+*.log
+.env
+.env.local
+
+# OS Metadata
+.DS_Store
+Thumbs.db
