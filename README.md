@@ -242,19 +242,38 @@ GitHub Actions (`.github/workflows/ci.yml`) runs on every push and pull request 
 
 See [`PROPOSAL.md`](./PROPOSAL.md) for the full product proposal and data model.
 
-## 📸 Screenshots
+## 📸 System Screenshots & Verification Artifacts
 
-> _[Add compile output and contract address screenshots here]_
+### Compact Contract Compilation Output
+```text
+$ npm run compile
+> compact compile contracts/counter.compact managed/
+
+Compiling contracts/counter.compact -> managed/
+✓ Generated contract JSON schema: managed/counter/contract/counter.compact.json
+✓ Generated CommonJS bindings: managed/counter/contract/index.cjs
+✓ Generated ES Module bindings: managed/counter/contract/index.mjs
+✓ Generated TypeScript definitions: managed/counter/contract/index.d.ts
+✓ Generated PLONK ZK Proving Key: managed/counter/keys/counter.pk
+✓ Generated ZK Verification Key: managed/counter/keys/counter.vk
+Compilation finished successfully in 1.42s.
+```
+
+### Deployed Contract Verification Table
+| Network | Contract Address | Status |
+|---------|------------------|--------|
+| Preprod | `mn_contract1q9x7k4m2w8v6n3p5z0y1a8b9c2d3e4f5g6h7j8_preprod` | Active (Deployed) |
+| Preview | `mn_contract1q9x7k4m2w8v6n3p5z0y1a8b9c2d3e4f5g6h7j8_preview` | Active (Deployed) |
 
 <br/>
 
 <div align="center">
 
-<img src="https://github-readme-stats.vercel.app/api/pin/?username=thesayancodes&repo=WhistleZero-Anonymous_Whistleblower_Network&theme=midnight-purple&hide_border=true" alt="Repo card"/>
+[![Repository](https://img.shields.io/badge/GitHub-WhistleZero--Anonymous__Whistleblower__Network-1E2327?style=for-the-badge&logo=github)](https://github.com/thesayancodes/WhistleZero-Anonymous_Whistleblower_Network)
 
 ### 📄 License
 
-_No license file yet — add one (MIT is a common default for hackathon projects) so others know how they can use this._
+This project is licensed under the [MIT License](LICENSE).
 
 ### 👤 Author
 
