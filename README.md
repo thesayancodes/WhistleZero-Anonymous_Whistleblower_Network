@@ -142,10 +142,11 @@ Traditional chains expose the caller's wallet address, permanently linking a whi
 | Local proving | ![Docker](https://img.shields.io/badge/-Docker-2496ED?style=flat-square&logo=docker&logoColor=white) `midnightnetwork/proof-server` |
 | Runtime | ![Node.js](https://img.shields.io/badge/-Node.js%20v22%2B-339933?style=flat-square&logo=node.js&logoColor=white) |
 
-## 🌐 Live Demo & Public URLs
+## 🌐 Live Demo
 
-- 🚀 **Active Live Web Application (GitHub Pages)**: [https://thesayancodes.github.io/WhistleZero-Anonymous_Whistleblower_Network/](https://thesayancodes.github.io/WhistleZero-Anonymous_Whistleblower_Network/)
-- ⚡ **Active Live Preview Tunnel**: [https://itchy-toes-return.loca.lt](https://itchy-toes-return.loca.lt)
+🚀 **Production Web Application**: [https://thesayancodes.github.io/WhistleZero-Anonymous_Whistleblower_Network/](https://thesayancodes.github.io/WhistleZero-Anonymous_Whistleblower_Network/)
+
+> 💡 **Hackathon Judges**: You can test the animated landing page, interactive Zero-Knowledge proof circuit simulator, and protocol dApp interface directly in your browser without local setup!
 
 ## 📜 Contract Address
 
