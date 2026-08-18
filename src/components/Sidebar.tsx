@@ -7,17 +7,17 @@ import {
   BarChart3, 
   ArrowLeftRight, 
   Settings, 
-  EyeOff, 
-  ShieldCheck, 
   ChevronLeft, 
   ChevronRight,
   Wallet,
   LogOut,
-  CheckCircle2
+  CheckCircle2,
+  Home
 } from 'lucide-react';
 import { WalletState } from '../hooks/useMidnight';
+import { Logo } from './Logo';
 
-export type NavTab = 'dashboard' | 'submit' | 'verify' | 'activity' | 'analytics' | 'transactions' | 'settings';
+export type NavTab = 'landing' | 'dashboard' | 'submit' | 'verify' | 'activity' | 'analytics' | 'transactions' | 'settings';
 
 interface SidebarProps {
   activeTab: NavTab;
@@ -41,6 +41,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   reportCount
 }) => {
   const navItems: { id: NavTab; label: string; icon: React.ReactNode; badge?: string }[] = [
+    { id: 'landing', label: 'Landing Page', icon: <Home className="w-4 h-4" /> },
     { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-4 h-4" /> },
     { id: 'submit', label: 'File Anonymous Report', icon: <FilePlus className="w-4 h-4" />, badge: 'ZK' },
     { id: 'verify', label: 'Verify On-Chain Report', icon: <SearchCheck className="w-4 h-4" /> },
@@ -52,35 +53,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <aside
-      className={`fixed left-0 top-0 bottom-0 z-40 bg-[#0c101b]/95 backdrop-blur-xl border-r border-white/10 flex flex-col justify-between transition-all duration-300 ${
+      className={`fixed left-0 top-0 bottom-0 z-40 bg-space-900/95 backdrop-blur-2xl border-r border-white/10 flex flex-col justify-between transition-all duration-300 ${
         collapsed ? 'w-20' : 'w-64'
       }`}
     >
       {/* Brand Header */}
       <div>
         <div className="h-16 px-4 flex items-center justify-between border-b border-white/10">
-          <div className="flex items-center gap-3 overflow-hidden">
-            <div className="w-9 h-9 shrink-0 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-emerald-400 p-0.5 shadow-lg shadow-indigo-500/20">
-              <div className="w-full h-full bg-[#0a0d14] rounded-[10px] flex items-center justify-center text-white">
-                <EyeOff className="w-4 h-4 text-indigo-400" />
-              </div>
-            </div>
-            {!collapsed && (
-              <div className="whitespace-nowrap">
-                <div className="flex items-center gap-1.5">
-                  <span className="font-extrabold text-base text-white tracking-tight">WhistleZero</span>
-                  <span className="text-[9px] font-bold uppercase tracking-wider bg-indigo-500/20 text-indigo-300 px-1.5 py-0.2 rounded border border-indigo-500/30">
-                    Midnight
-                  </span>
-                </div>
-                <p className="text-[10px] text-gray-400">Zero-Knowledge Network</p>
-              </div>
-            )}
+          <div className="flex items-center gap-3 overflow-hidden cursor-pointer" onClick={() => setActiveTab('landing')}>
+            <Logo size={collapsed ? 'sm' : 'md'} showText={!collapsed} />
           </div>
 
           <button
             onClick={() => setCollapsed(!collapsed)}
-            className="p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/5 transition"
+            className="p-1.5 rounded-lg text-[#8A8FA3] hover:text-white hover:bg-white/5 transition"
             title={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
           >
             {collapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
@@ -97,12 +83,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 onClick={() => setActiveTab(item.id)}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
                   isActive
-                    ? 'bg-indigo-600/20 text-indigo-300 border border-indigo-500/40 shadow-sm shadow-indigo-500/10'
-                    : 'text-gray-400 hover:text-white hover:bg-white/5 border border-transparent'
+                    ? 'bg-zk/20 text-zk-glow border border-zk/40 shadow-sm shadow-zk/10'
+                    : 'text-[#8A8FA3] hover:text-white hover:bg-white/5 border border-transparent'
                 }`}
                 title={collapsed ? item.label : undefined}
               >
-                <div className={`${isActive ? 'text-indigo-400' : 'text-gray-400'}`}>
+                <div className={`${isActive ? 'text-zk-glow' : 'text-[#8A8FA3]'}`}>
                   {item.icon}
                 </div>
                 {!collapsed && (
@@ -112,7 +98,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                       <span
                         className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
                           isActive
-                            ? 'bg-indigo-500/30 text-indigo-200'
+                            ? 'bg-zk/30 text-zk-light'
                             : 'bg-white/10 text-gray-400'
                         }`}
                       >
@@ -144,7 +130,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 </div>
                 <button
                   onClick={onDisconnect}
-                  className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 text-xs font-semibold transition"
+                  className="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 text-xs font-semibold transition"
                 >
                   <LogOut className="w-3.5 h-3.5" />
                   <span>Disconnect</span>
@@ -154,9 +140,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
               <button
                 onClick={onConnect}
                 disabled={wallet.isConnecting}
-                className="w-full btn-primary justify-center py-2.5 text-xs"
+                className="w-full btn-whistle justify-center py-2.5 text-xs font-sans"
               >
-                <Wallet className="w-3.5 h-3.5" />
+                <Wallet className="w-3.5 h-3.5 text-space-950" />
                 <span>{wallet.isConnecting ? 'Connecting...' : 'Connect Lace Wallet'}</span>
               </button>
             )}
@@ -167,7 +153,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             className={`w-full p-2.5 rounded-xl flex items-center justify-center transition ${
               wallet.isConnected
                 ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                : 'bg-indigo-600 text-white'
+                : 'bg-whistle text-space-950'
             }`}
             title={wallet.isConnected ? 'Disconnect Wallet' : 'Connect Wallet'}
           >

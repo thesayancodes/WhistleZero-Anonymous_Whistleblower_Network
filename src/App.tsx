@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useMidnight } from './hooks/useMidnight';
 import { Sidebar, NavTab } from './components/Sidebar';
 import { TopNav } from './components/TopNav';
+import { LandingPage } from './components/LandingPage';
 import { DashboardView } from './components/DashboardView';
 import { SubmitReportView } from './components/SubmitReportView';
 import { VerifyView } from './components/VerifyView';
@@ -11,7 +12,7 @@ import { TransactionsView } from './components/TransactionsView';
 import { SettingsView } from './components/SettingsView';
 
 export const App: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<NavTab>('dashboard');
+  const [activeTab, setActiveTab] = useState<NavTab>('landing');
   const [collapsed, setCollapsed] = useState<boolean>(false);
 
   const {
@@ -23,8 +24,21 @@ export const App: React.FC = () => {
     submitAnonymousReportCircuit
   } = useMidnight();
 
+  // If on landing page, show the complete animated landing page experience
+  if (activeTab === 'landing') {
+    return (
+      <LandingPage
+        wallet={wallet}
+        ledger={ledger}
+        onLaunchApp={() => setActiveTab('dashboard')}
+        onNavigateToSubmit={() => setActiveTab('submit')}
+      />
+    );
+  }
+
+  // Otherwise, show the full dApp Terminal & Protocol Interface
   return (
-    <div className="min-h-screen bg-[#0a0d14] text-gray-100 flex">
+    <div className="min-h-screen bg-space-950 text-[#E8E9F3] flex">
       {/* Sidebar Navigation */}
       <Sidebar
         activeTab={activeTab}
@@ -38,7 +52,11 @@ export const App: React.FC = () => {
       />
 
       {/* Top Bar Header */}
-      <TopNav wallet={wallet} collapsed={collapsed} />
+      <TopNav
+        wallet={wallet}
+        collapsed={collapsed}
+        onNavigateHome={() => setActiveTab('landing')}
+      />
 
       {/* Main Content Viewport */}
       <main
