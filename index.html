@@ -1,18 +1,19 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en" class="dark scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WhistleZero — Anonymous Whistleblower Network on Midnight</title>
-    <meta name="description" content="Prove report legitimacy without revealing employee identity. Zero-knowledge whistleblower network powered by Midnight Network & Compact." />
+    <meta name="description" content="Prove report legitimacy without revealing employee identity. Zero-knowledge whistleblower network powered by Midnight Network & Compact smart contracts." />
+    <meta name="theme-color" content="#05060F" />
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Space Grotesk (headings), Inter (body), JetBrains Mono (code/hashes) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS CDN for instant styling -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -20,21 +21,44 @@
         theme: {
           extend: {
             colors: {
-              dark: '#0a0d14',
-              'dark-card': 'rgba(18, 24, 38, 0.75)',
+              space: {
+                950: '#05060F',
+                900: '#0B0E1A',
+                800: '#111528',
+                700: '#1A2038',
+              },
+              zk: {
+                DEFAULT: '#8B5CF6',
+                glow: '#A78BFA',
+                dark: '#6D28D9',
+                light: '#C4B5FD',
+              },
+              cyber: {
+                DEFAULT: '#22D3EE',
+                glow: '#67E8F9',
+                dark: '#0891B2',
+              },
+              whistle: {
+                DEFAULT: '#F59E0B',
+                glow: '#FBBF24',
+                dark: '#D97706',
+              },
+              dark: '#05060F',
+              'dark-card': 'rgba(11, 14, 26, 0.75)',
             },
             fontFamily: {
-              sans: ['Plus Jakarta Sans', 'sans-serif'],
+              heading: ['Space Grotesk', 'sans-serif'],
+              sans: ['Inter', 'sans-serif'],
               mono: ['JetBrains Mono', 'monospace'],
             }
           }
         }
       }
     </script>
-    <script type="module" crossorigin src="./assets/index-Oq1M_AVX.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-Bs_u9HCD.css">
+    <script type="module" crossorigin src="./assets/index-CVP1AMfj.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DKP3P0GE.css">
   </head>
-  <body class="bg-[#0a0d14] text-gray-100 antialiased min-h-screen">
+  <body class="bg-[#05060F] text-[#E8E9F3] antialiased min-h-screen selection:bg-zk/30 selection:text-white">
     <div id="root"></div>
   </body>
 </html>
