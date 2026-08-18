@@ -146,8 +146,6 @@ Traditional chains expose the caller's wallet address, permanently linking a whi
 
 🚀 **Production Web Application**: [https://thesayancodes.github.io/WhistleZero-Anonymous_Whistleblower_Network/](https://thesayancodes.github.io/WhistleZero-Anonymous_Whistleblower_Network/)
 
-> 💡 **Hackathon Judges**: You can test the animated landing page, interactive Zero-Knowledge proof circuit simulator, and protocol dApp interface directly in your browser without local setup!
-
 ## 📜 Contract Address
 
 | Network | Contract Address | Status |
