@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "description": "WhistleZero — Anonymous Whistleblower Network built on Midnight Network",
+  "homepage": "https://thesayancodes.github.io/WhistleZero-Anonymous_Whistleblower_Network/",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
