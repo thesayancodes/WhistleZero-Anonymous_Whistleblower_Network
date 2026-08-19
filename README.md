@@ -23,7 +23,7 @@
 
 <br/>
 
-**[🎥 Live Demo](#-live-demo)** &nbsp;•&nbsp; **[🔍 How It Works](#-how-it-works)** &nbsp;•&nbsp; **[🔐 Privacy Model](#-privacy-model)** &nbsp;•&nbsp; **[⚡ Quick Start](#-quick-start)** &nbsp;•&nbsp; **[🧑‍⚖️ For Judges](#-60-second-judge-checklist)**
+**[🌐 Live Demo](#live-demo)** &nbsp;•&nbsp; **[🔍 How It Works](#how-it-works)** &nbsp;•&nbsp; **[🔐 Privacy Model](#privacy-model)** &nbsp;•&nbsp; **[⚡ Quick Start](#quick-start)** &nbsp;•&nbsp; **[🧑‍⚖️ For Judges](#for-judges)**
 
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0F0C29,50:6C5CE7,100:0F0C29&height=3&width=1000" width="100%"/>
 
@@ -49,6 +49,7 @@ WhistleZero lets an employee, public servant, or corporate insider submit a repo
 
 <br/>
 
+<a id="how-it-works"></a>
 ## 🔍 How It Works
 
 ```mermaid
@@ -85,6 +86,7 @@ graph TD
 
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0F0C29,50:6C5CE7,100:0F0C29&height=3&width=1000" width="100%"/>
 
+<a id="privacy-model"></a>
 ## 🔐 Privacy Model
 
 | | Field | Visibility |
@@ -117,6 +119,8 @@ Traditional chains expose the caller's wallet address, permanently linking a whi
 
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0F0C29,50:6C5CE7,100:0F0C29&height=3&width=1000" width="100%"/>
 
+<a id="for-judges"></a>
+<a id="60-second-judge-checklist"></a>
 ## 🧑‍⚖️ 60-Second Judge Checklist
 
 <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&weight=600&size=18&duration=2000&pause=800&color=D6C9FF&center=true&vCenter=true&width=600&lines=Don't+take+our+word+for+it...;Verify+it+yourself+in+under+a+minute." alt="Typing SVG" />
@@ -142,6 +146,7 @@ Traditional chains expose the caller's wallet address, permanently linking a whi
 | Local proving | ![Docker](https://img.shields.io/badge/-Docker-2496ED?style=flat-square&logo=docker&logoColor=white) `midnightnetwork/proof-server` |
 | Runtime | ![Node.js](https://img.shields.io/badge/-Node.js%20v22%2B-339933?style=flat-square&logo=node.js&logoColor=white) |
 
+<a id="live-demo"></a>
 ## 🌐 Live Demo
 
 🚀 **Production Web Application**: [https://thesayancodes.github.io/WhistleZero-Anonymous_Whistleblower_Network/](https://thesayancodes.github.io/WhistleZero-Anonymous_Whistleblower_Network/)
@@ -155,6 +160,7 @@ Traditional chains expose the caller's wallet address, permanently linking a whi
 
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0F0C29,50:6C5CE7,100:0F0C29&height=3&width=1000" width="100%"/>
 
+<a id="quick-start"></a>
 ## ⚡ Quick Start
 
 <details open>
