@@ -240,7 +240,12 @@ GitHub Actions (`.github/workflows/ci.yml`) runs on every push and pull request 
 
 See [`PROPOSAL.md`](./PROPOSAL.md) for the full product proposal and data model.
 
-## 📸 System Screenshots & Verification Artifacts
+## 📸 UI Showcase
+
+### 🌆 Landing Page — Your Vision Your Empire
+
+<img width="1919" height="912" alt="image" src="https://github.com/user-attachments/assets/d9bb2be9-7fde-4ba9-943d-df1d88f67863" />
+
 
 ### Compact Contract Compilation Output
 ```text
