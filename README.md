@@ -43,7 +43,7 @@ WhistleZero lets an employee, public servant, or corporate insider submit a repo
 
 <div align="center">
 
-![Verifiable](https://img.shields.io/badge/-Cryptographically%20Verifiable-0F0C29?style=flat-square) ![Anonymous](https://img.shields.io/badge/-Provably%20Anonymous-6C5CE7?style=flat-square) ![Tamper--proof](https://img.shields.io/badge/-Tamper--proof-9146FF?style=flat-square) ![Auditable](https://img.shields.io/badge/-Publicly%20Auditable-302B63?style=flat-square)
+![Cryptographically Verifiable](https://img.shields.io/badge/-Cryptographically%20Verifiable-0891B2?style=flat-square) ![Anonymous](https://img.shields.io/badge/-Provably%20Anonymous-6C5CE7?style=flat-square) ![Tamper--proof](https://img.shields.io/badge/-Tamper--proof-9146FF?style=flat-square) ![Auditable](https://img.shields.io/badge/-Publicly%20Auditable-302B63?style=flat-square)
 
 </div>
 
