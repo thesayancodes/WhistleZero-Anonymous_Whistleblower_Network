@@ -1,0 +1,34 @@
+{
+  "contractName": "WhistleZeroProtocol",
+  "languageVersion": "0.1.0",
+  "ledgerState": {
+    "total_reports": { "type": "Uint<64>" },
+    "latest_evidence_commitment": { "type": "Bytes<32>" },
+    "organization_credential_root": { "type": "Bytes<32>" },
+    "active_investigations": { "type": "Uint<64>" }
+  },
+  "witnesses": {
+    "whistleblower_credential_secret": { "returnType": "Bytes<32>" },
+    "report_content_hash": { "returnType": "Bytes<32>" },
+    "department_auth_token": { "returnType": "Bytes<32>" }
+  },
+  "circuits": {
+    "submit_anonymous_report": {
+      "params": [
+        { "name": "category_code", "type": "Uint<8>" },
+        { "name": "urgency_level", "type": "Uint<8>" }
+      ],
+      "returnType": "Void"
+    },
+    "escalate_investigation": {
+      "params": [],
+      "returnType": "Void"
+    },
+    "update_organization_root": {
+      "params": [
+        { "name": "new_root", "type": "Bytes<32>" }
+      ],
+      "returnType": "Void"
+    }
+  }
+}

@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { 
-  Layers, 
-  ShieldCheck, 
-  Lock, 
-  Eye, 
-  Cpu, 
-  FileCode, 
-  Database, 
-  Network, 
-  CheckCircle2, 
+import {
+  Layers,
+  ShieldCheck,
+  Lock,
+  Eye,
+  Cpu,
+  FileCode,
+  Database,
+  Network,
+  CheckCircle2,
   ExternalLink,
   ArrowDown,
   ArrowRight
@@ -113,7 +113,7 @@ export const ArchitectureSection: React.FC = () => {
             {/* Node 3 */}
             <div className="p-4 rounded-xl bg-space-900 border border-zk/40 bg-zk/10 transition shadow-lg shadow-zk/10">
               <div className="text-[10px] font-mono text-zk-glow uppercase mb-1">Compact Contract</div>
-              <div className="font-heading font-bold text-sm text-white">counter.compact</div>
+              <div className="font-heading font-bold text-sm text-white">whistleblower.compact</div>
               <div className="text-xs text-[#8A8FA3] mt-1">Defines ZK constraints & disclose() logic</div>
             </div>
 
@@ -149,31 +149,28 @@ export const ArchitectureSection: React.FC = () => {
             <div className="flex items-center gap-2 bg-black/40 p-1 rounded-xl border border-white/10">
               <button
                 onClick={() => setActivePrivacyTab('all')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
-                  activePrivacyTab === 'all'
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${activePrivacyTab === 'all'
                     ? 'bg-zk text-white'
                     : 'text-gray-400 hover:text-white'
-                }`}
+                  }`}
               >
                 All Fields
               </button>
               <button
                 onClick={() => setActivePrivacyTab('public')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
-                  activePrivacyTab === 'public'
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${activePrivacyTab === 'public'
                     ? 'bg-cyber/20 text-cyber border border-cyber/30'
                     : 'text-gray-400 hover:text-white'
-                }`}
+                  }`}
               >
                 🌐 Public Ledger
               </button>
               <button
                 onClick={() => setActivePrivacyTab('private')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
-                  activePrivacyTab === 'private'
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${activePrivacyTab === 'private'
                     ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
                     : 'text-gray-400 hover:text-white'
-                }`}
+                  }`}
               >
                 🔒 Private Witnesses
               </button>
@@ -206,11 +203,10 @@ export const ArchitectureSection: React.FC = () => {
                       {item.type}
                     </td>
                     <td className="py-4 px-4">
-                      <span className={`px-2.5 py-1 rounded-full text-[10px] font-semibold ${
-                        item.status === 'Public'
+                      <span className={`px-2.5 py-1 rounded-full text-[10px] font-semibold ${item.status === 'Public'
                           ? 'bg-cyber/10 text-cyber border border-cyber/20'
                           : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
-                      }`}>
+                        }`}>
                         {item.visibility}
                       </span>
                     </td>

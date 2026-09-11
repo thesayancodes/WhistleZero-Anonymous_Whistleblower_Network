@@ -1,12 +1,12 @@
 import React from 'react';
-import { 
-  Cpu, 
-  Code2, 
-  ShieldCheck, 
-  Layers, 
-  Boxes, 
-  Terminal, 
-  Globe, 
+import {
+  Cpu,
+  Code2,
+  ShieldCheck,
+  Layers,
+  Boxes,
+  Terminal,
+  Globe,
   Sparkles,
   ExternalLink
 } from 'lucide-react';

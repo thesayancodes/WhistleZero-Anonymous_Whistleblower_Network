@@ -73,7 +73,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({
                 Hackathon Judge Quick Checklist
               </h4>
               <p className="text-[11px] text-[#8A8FA3]">
-                Compact smart contract in <code className="text-cyber">contracts/counter.compact</code> • Vitest test suite in <code className="text-zk-glow">tests/counter.test.ts</code>
+                Compact smart contract in <code className="text-cyber">contracts/whistleblower.compact</code> • Vitest test suite in <code className="text-zk-glow">tests/whistleblower.test.ts</code>
               </p>
             </div>
           </div>

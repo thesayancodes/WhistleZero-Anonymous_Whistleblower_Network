@@ -9,10 +9,10 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "compile": "compact compile contracts/counter.compact managed/",
+    "compile": "compact compile contracts/whistleblower.compact managed/",
     "test": "vitest run",
     "test:watch": "vitest",
-    "deploy": "echo 'Run: NODE_OPTIONS=\"--max-old-space-size=12288\" npm run deploy -- --network preprod'"
+    "deploy": "tsx scripts/deploy.ts --network preprod"
   },
   "dependencies": {
     "clsx": "^2.1.1",

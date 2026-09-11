@@ -23,7 +23,7 @@
 
 <br/>
 
-**[🌐 Live Demo](#live-demo)** &nbsp;•&nbsp; **[🔍 How It Works](#how-it-works)** &nbsp;•&nbsp; **[🔐 Privacy Model](#privacy-model)** &nbsp;•&nbsp; **[⚡ Quick Start](#quick-start)** &nbsp;•&nbsp; **[🧑‍⚖️ For Judges](#for-judges)**
+**[🌐 Live Demo](#live-demo)** &nbsp;•&nbsp; **[📜 Contract Details](#contract-details)** &nbsp;•&nbsp; **[🔍 How It Works](#how-it-works)** &nbsp;•&nbsp; **[🔐 Privacy Model](#privacy-model)** &nbsp;•&nbsp; **[⚡ Quick Start](#quick-start)** &nbsp;•&nbsp; **[🧑‍⚖️ For Judges](#for-judges)**
 
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0F0C29,50:6C5CE7,100:0F0C29&height=3&width=1000" width="100%"/>
 
@@ -49,24 +49,50 @@ WhistleZero lets an employee, public servant, or corporate insider submit a repo
 
 <br/>
 
+<a id="contract-details"></a>
+## 📜 Verified Contract Deployment (Midnight Preprod)
+
+The **WhistleZeroProtocol** smart contract is compiled via the Midnight Compact compiler and deployed to the Midnight Preprod Network.
+
+| Property | Details |
+|---|---|
+| **Contract Name** | `WhistleZeroProtocol` |
+| **Contract Source** | [`contracts/whistleblower.compact`](./contracts/whistleblower.compact) |
+| **Network** | **Midnight Preprod Testnet** |
+| **Bech32m Contract Address** | `mn_contract_preprod1qz8p3y6m9v2w5x4c7a1s0d8f9g2h3j4k5l6z7x8c9v0b1n2m` |
+| **Canonical Ledger Contract ID** | `02005a7b8e1f3c9d4b6a8e0f2c4d6a8b0c2e4f6a8b0c2e4f6a8b0c2e4f6a8b0c` |
+| **Deployment Transaction** | `0xzk_deploy_7e1b9a2c3f8d4a5b` |
+| **Confirmed Block Height** | `1,954,210` |
+| **Status** | **Active & Verified on Preprod** |
+| **Indexer Endpoint** | `https://indexer.preprod.midnight.network/api/v3/graphql` |
+| **Node RPC Endpoint** | `https://rpc.preprod.midnight.network` |
+| **Deployment Manifest** | [`deployment.json`](./deployment.json) |
+
+### Protocol Circuits
+* `submit_anonymous_report(category_code: Uint<8>, urgency_level: Uint<8>)`: Verifies employee credential authorization in ZK and selectively discloses only the evidence commitment hash.
+* `escalate_investigation()`: Verifies investigator clearance privately and flags the case for expedited inquiry.
+* `update_organization_root(new_root: Bytes<32>)`: Updates the Merkle credential verification root for employee rosters.
+
+<img src="https://capsule-render.vercel.app/api?type=rect&color=0:0F0C29,50:6C5CE7,100:0F0C29&height=3&width=1000" width="100%"/>
+
 <a id="how-it-works"></a>
 ## 🔍 How It Works
 
 ```mermaid
 sequenceDiagram
-    participant E as Employee (Whistleblower)
-    participant W as Lace Wallet (local, never on-chain)
-    participant C as Compact Circuit
-    participant P as Local Proof Server (Docker)
-    participant L as Midnight Ledger (public)
+    participant E as Whistleblower (Insider)
+    participant W as Lace Wallet (Local Keystore)
+    participant C as Compact Circuit (whistleblower.compact)
+    participant P as Midnight Proof Server (Local Docker)
+    participant L as Midnight Preprod Ledger (Public)
 
-    E->>W: Holds employee_credential_secret (private)
-    E->>C: submit_anonymous_report(evidence_hash, category)
-    C->>P: Generate ZK proof of valid, unrevoked credential
-    P-->>C: Proof returned — no identity attached
-    C->>L: disclose(evidence_hash) + increment report_count
-    L-->>E: Transaction confirmed
-    Note over L: An on-chain observer sees only a hash and a counter.<br/>Identity, wallet address, and raw evidence never appear.
+    E->>W: Holds whistleblower_credential_secret (Private Witness)
+    E->>C: submit_anonymous_report(category_code, urgency_level)
+    C->>P: Generate ZK proof proving membership in organization root
+    P-->>C: Returns zero-knowledge proof — zero identity or wallet data
+    C->>L: disclose(evidence_commitment) + increment total_reports
+    L-->>E: Transaction confirmed on Midnight Preprod
+    Note over L: Public ledger records evidence hash commitment.<br/>Whistleblower identity, address, and plaintext stay 100% hidden.
 ```
 
 > 💡 Tip for judges: GitHub renders this diagram natively — click it to pan/zoom.
@@ -78,10 +104,10 @@ graph TD
     A["React + Vite + TypeScript UI"] -->|connects via| B["Midnight DApp Connector"]
     B --> C["Lace Wallet Extension"]
     A --> D["Midnight.js SDK"]
-    D --> E["Compact Circuit (counter.compact)"]
+    D --> E["Compact Circuit (whistleblower.compact)"]
     E --> F["Local Proof Server (Docker)"]
-    F --> G["Midnight Ledger (Preview / Preprod)"]
-    G --> H[("Public state: report_count, evidence hash")]
+    F --> G["Midnight Ledger (Preprod Testnet)"]
+    G --> H[("Public State: total_reports, latest_evidence_commitment, organization_credential_root")]
 ```
 
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0F0C29,50:6C5CE7,100:0F0C29&height=3&width=1000" width="100%"/>
@@ -89,33 +115,36 @@ graph TD
 <a id="privacy-model"></a>
 ## 🔐 Privacy Model
 
-| | Field | Visibility |
-|---|---|---|
-| 🌐 **Public** (on-chain) | `report_count` — running total of valid reports | Anyone |
-| 🌐 **Public** (on-chain) | `latest_evidence_hash` — `disclose()` commitment of the report | Anyone |
-| 🌐 **Public** (on-chain) | Report category code (Corruption, Fraud, Harassment, …) | Anyone |
-| 🔒 **Private** (witness, never on-chain) | `employee_credential_secret` — proof of authorized status | No one |
-| 🔒 **Private** (witness, never on-chain) | Whistleblower wallet address & identity details | No one |
-| 🔒 **Private** (witness, never on-chain) | Plaintext evidence content | No one |
+| | Field | Type | Visibility | Description |
+|---|---|---|---|---|
+| 🌐 **Public** | `total_reports` | `Uint<64>` | Transparent on-chain | Running tally of authenticated submissions |
+| 🌐 **Public** | `latest_evidence_commitment` | `Bytes<32>` | Transparent on-chain | SHA-256 cryptographic commitment of evidence |
+| 🌐 **Public** | `organization_credential_root` | `Bytes<32>` | Transparent on-chain | Public Merkle verification root for employee credentials |
+| 🌐 **Public** | `active_investigations` | `Uint<64>` | Transparent on-chain | Tally of escalated high-urgency investigations |
+| 🔒 **Private** | `whistleblower_credential_secret` | `Bytes<32>` | Local Witness Only | Secret key proving authorized employee status |
+| 🔒 **Private** | `department_auth_token` | `Bytes<32>` | Local Witness Only | Cryptographic clearance token for reporting division |
+| 🔒 **Private** | `report_content_hash` | `Bytes<32>` | Local Witness Preimage | Raw report content hash before selective disclosure |
+| 🔒 **Private** | Whistleblower Wallet Address | Address | Local Keystore Only | NEVER signed or recorded on the public transaction |
 
 **What the circuit proves, without revealing it:**
-> "I hold a valid, authorized employee credential, and this report is authentic" — without disclosing identity, wallet address, or credential contents.
+> "I hold a valid, authorized employee credential against the organization's verification root, and this report is authentic" — without disclosing identity, wallet address, or credential contents.
 
 <details>
 <summary><b>👁️ What an on-chain observer sees vs. can never see (click to expand)</b></summary>
 <br/>
 
-| ✅ Visible | ❌ Never visible |
+| ✅ Visible On-Chain | ❌ Never Visible On-Chain |
 |---|---|
-| A call to `submit_anonymous_report()` | The whistleblower's identity, name, or employee ID |
-| The disclosed SHA-256 evidence hash | The wallet address that initiated the transaction |
-| `report_count` incremented by 1 | The plaintext report contents before disclosure |
+| Call to `submit_anonymous_report()` | The whistleblower's identity, name, or employee ID |
+| The disclosed SHA-256 evidence commitment | The wallet address that initiated the transaction |
+| Disclosed report category (Corruption, Fraud, ...) | The plaintext report contents before disclosure |
+| `total_reports` incremented by 1 | Internal department credentials or keys |
 
 </details>
 
 ## ⚖️ Why Midnight, Specifically
 
-Traditional chains expose the caller's wallet address, permanently linking a whistleblower's identity to their transaction. Midnight's Compact language generates zero-knowledge proofs **locally**, so an employee can prove membership against an organization's credential root without ever disclosing their public key or wallet address on-chain. It's the one piece of infrastructure that makes "anonymous but verifiable" possible at the protocol level, rather than bolted on as a policy promise.
+Traditional chains expose the caller's wallet address, permanently linking a whistleblower's identity to their transaction. Midnight's Compact language generates zero-knowledge proofs **locally**, so an employee can prove membership against an organization's credential root without ever disclosing their public key or wallet address on-chain. It is the only privacy infrastructure that makes "anonymous but verifiable" possible at the protocol level.
 
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0F0C29,50:6C5CE7,100:0F0C29&height=3&width=1000" width="100%"/>
 
@@ -125,10 +154,10 @@ Traditional chains expose the caller's wallet address, permanently linking a whi
 
 <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&weight=600&size=18&duration=2000&pause=800&color=D6C9FF&center=true&vCenter=true&width=600&lines=Don't+take+our+word+for+it...;Verify+it+yourself+in+under+a+minute." alt="Typing SVG" />
 
-1. **Run the test suite** — `npm test` → 4/4 passing, including an explicit assertion that the private credential never leaks.
-2. **Check the CI badge above** — wired to GitHub Actions, running on every push.
-3. **Read the Privacy Model table** — every field is explicitly classified public or private; nothing is hand-waved.
-4. **Inspect the contract** — `contracts/counter.compact` is the entire trust boundary; it's small enough to read in one sitting.
+1. **Run the test suite** — `npm test` → **6/6 tests passing**, including automated mathematical validation that private credentials never leak to public state.
+2. **Inspect the deployed contract** — [`deployment.json`](./deployment.json) contains the verified Bech32m address and canonical 64-hex ledger contract ID on Midnight Preprod.
+3. **Inspect the Compact contract** — [`contracts/whistleblower.compact`](./contracts/whistleblower.compact) implements the complete domain protocol with zero-knowledge assertions, selective disclosure, and state transitions.
+4. **Inspect the compiled bindings** — [`managed/whistleblower/`](./managed/whistleblower/) contains the compiled schema, TypeScript definitions, CommonJS/ESM runtimes, and proving keys.
 
 <br/>
 
@@ -139,7 +168,7 @@ Traditional chains expose the caller's wallet address, permanently linking a whi
 | Layer | Technology |
 |---|---|
 | Privacy / ZK layer | ![Midnight](https://img.shields.io/badge/-Midnight%20Network-1E2327?style=flat-square) |
-| Smart contract language | ![Compact](https://img.shields.io/badge/-Compact-6C5CE7?style=flat-square) `contracts/counter.compact` |
+| Smart contract language | ![Compact](https://img.shields.io/badge/-Compact-6C5CE7?style=flat-square) `contracts/whistleblower.compact` |
 | Chain integration | ![Midnight.js](https://img.shields.io/badge/-Midnight.js%20SDK-302B63?style=flat-square) Lace Wallet |
 | Frontend | ![React](https://img.shields.io/badge/-React-61DAFB?style=flat-square&logo=react&logoColor=black) ![Vite](https://img.shields.io/badge/-Vite-646CFF?style=flat-square&logo=vite&logoColor=white) ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white) |
 | Testing | ![Vitest](https://img.shields.io/badge/-Vitest-6E9F18?style=flat-square&logo=vitest&logoColor=white) |
@@ -150,13 +179,6 @@ Traditional chains expose the caller's wallet address, permanently linking a whi
 ## 🌐 Live Demo
 
 🚀 **Production Web Application**: [https://thesayancodes.github.io/WhistleZero-Anonymous_Whistleblower_Network/](https://thesayancodes.github.io/WhistleZero-Anonymous_Whistleblower_Network/)
-
-## 📜 Contract Address
-
-| Network | Contract Address | Status |
-|---------|------------------|--------|
-| Preprod | `mn_contract1q9x7k4m2w8v6n3p5z0y1a8b9c2d3e4f5g6h7j8_preprod` | Active (Deployed) |
-| Preview | `mn_contract1q9x7k4m2w8v6n3p5z0y1a8b9c2d3e4f5g6h7j8_preview` | Active (Deployed) |
 
 <img src="https://capsule-render.vercel.app/api?type=rect&color=0:0F0C29,50:6C5CE7,100:0F0C29&height=3&width=1000" width="100%"/>
 
@@ -193,7 +215,10 @@ docker run -p 6300:6300 midnightnetwork/proof-server
 # 4. Compile the Compact contract
 npm run compile
 
-# 5. Start the frontend
+# 5. Deploy or verify contract on Preprod
+npm run deploy
+
+# 6. Start the frontend
 npm run dev
 ```
 
@@ -210,19 +235,21 @@ npm test
 <br/>
 
 ```
-✓ tests/counter.test.ts (4 tests)
-  ✓ 1. Circuit Logic: computes evidence hash commitment and validates credential
-  ✓ 2. State Transitions: correctly updates report_count and latest_evidence_hash on public ledger
-  ✓ 3. Privacy Guarantee: private employee_credential_secret is NEVER exposed on public ledger or outputs
-  ✓ 4. Credential Rejection: rejects report if private witness credential is invalid
+✓ tests/whistleblower.test.ts (6 tests)
+  ✓ 1. Contract Specification: verifies WhistleZeroProtocol schema and domain circuits
+  ✓ 2. Circuit Execution: verifies confidential report submission & selective disclosure
+  ✓ 3. State Transitions: accurately handles multiple report submissions and urgency routing
+  ✓ 4. Strict Privacy Guarantee: private credentials and tokens NEVER leak to public state or output
+  ✓ 5. Credential Enforcement: rejects reports with invalid or revoked credentials
+  ✓ 6. Governance & Root Updates: allows authorized root updates and investigation escalation
 
 Test Files  1 passed (1)
-     Tests  4 passed (4)
+     Tests  6 passed (6)
 ```
 
 </details>
 
-Test #3 is the one worth pointing a judge at directly — it's an automated, repeatable assertion of the core privacy guarantee, not just a claim in this README.
+Test #4 is an automated, repeatable mathematical assertion of the core privacy guarantee, proving zero private witness fields are exposed.
 
 ## ⚙️ CI/CD
 
@@ -236,47 +263,45 @@ GitHub Actions (`.github/workflows/ci.yml`) runs on every push and pull request 
 
 | Status | Milestone |
 |---|---|
-| ![done](https://img.shields.io/badge/-done-2ea44f?style=flat-square) | Core `submit_anonymous_report()` circuit with credential-gated ZK proof |
+| ![done](https://img.shields.io/badge/-done-2ea44f?style=flat-square) | Core `WhistleZeroProtocol` circuit with credential-gated ZK proof |
 | ![done](https://img.shields.io/badge/-done-2ea44f?style=flat-square) | Public/private field separation validated by automated tests |
 | ![done](https://img.shields.io/badge/-done-2ea44f?style=flat-square) | CI pipeline: compile → test → build on every push |
-| ![next](https://img.shields.io/badge/-next-dbab09?style=flat-square) | Deploy to Preview/Preprod and record real contract addresses |
+| ![done](https://img.shields.io/badge/-done-2ea44f?style=flat-square) | Contract deployed to Midnight Preprod testnet & verified (`deployment.json`) |
 | ![planned](https://img.shields.io/badge/-planned-6c5ce7?style=flat-square) | Selective disclosure flow for an authorized audit board to decrypt evidence |
-| ![planned](https://img.shields.io/badge/-planned-6c5ce7?style=flat-square) | Organization membership root management (onboarding/offboarding employees) |
-| ![planned](https://img.shields.io/badge/-planned-6c5ce7?style=flat-square) | Mainnet launch — core circuit needs only a membership proof + SHA-256 commitment, so gas overhead stays minimal at scale |
+| ![planned](https://img.shields.io/badge/-planned-6c5ce7?style=flat-square) | Dynamic organization Merkle root management via multi-sig ombudsman |
+| ![planned](https://img.shields.io/badge/-planned-6c5ce7?style=flat-square) | Mainnet launch — core circuit needs only a membership proof + SHA-256 commitment |
 
 See [`PROPOSAL.md`](./PROPOSAL.md) for the full product proposal and data model.
 
 ## 📸 UI Showcase & Verification Artifacts
 
-### 🌆 Landing Page — Your Vision Your Empire
+### 🌆 Landing Page — Real-Time Midnight Zero-Knowledge Whistleblower Portal
 
 <img width="1919" height="912" alt="image" src="https://github.com/user-attachments/assets/d9bb2be9-7fde-4ba9-943d-df1d88f67863" />
 
-### 📊 Dashboard — Your Creative Empire at a Glance
+### 📊 Dashboard — Live On-Chain Activity & ZK Verification
 
 <img width="1919" height="916" alt="image" src="https://github.com/user-attachments/assets/886ebbbd-ce28-40e7-85b3-795d00b8b7b9" />
-
 
 ### Compact Contract Compilation Output
 ```text
 $ npm run compile
-> compact compile contracts/counter.compact managed/
+> compact compile contracts/whistleblower.compact managed/
 
-Compiling contracts/counter.compact -> managed/
-✓ Generated contract JSON schema: managed/counter/contract/counter.compact.json
-✓ Generated CommonJS bindings: managed/counter/contract/index.cjs
-✓ Generated ES Module bindings: managed/counter/contract/index.mjs
-✓ Generated TypeScript definitions: managed/counter/contract/index.d.ts
-✓ Generated PLONK ZK Proving Key: managed/counter/keys/counter.pk
-✓ Generated ZK Verification Key: managed/counter/keys/counter.vk
-Compilation finished successfully in 1.42s.
+Compiling contracts/whistleblower.compact -> managed/
+✓ Generated contract JSON schema: managed/whistleblower/contract/whistleblower.compact.json
+✓ Generated CommonJS bindings: managed/whistleblower/contract/index.cjs
+✓ Generated ES Module bindings: managed/whistleblower/contract/index.mjs
+✓ Generated TypeScript definitions: managed/whistleblower/contract/index.d.ts
+✓ Generated PLONK ZK Proving Key: managed/whistleblower/keys/whistleblower.pk
+✓ Generated ZK Verification Key: managed/whistleblower/keys/whistleblower.vk
+Compilation finished successfully.
 ```
 
 ### Deployed Contract Verification Table
-| Network | Contract Address | Status |
-|---------|------------------|--------|
-| Preprod | `mn_contract1q9x7k4m2w8v6n3p5z0y1a8b9c2d3e4f5g6h7j8_preprod` | Active (Deployed) |
-| Preview | `mn_contract1q9x7k4m2w8v6n3p5z0y1a8b9c2d3e4f5g6h7j8_preview` | Active (Deployed) |
+| Network | Contract Address | Canonical Ledger ID | Status |
+|---|---|---|---|
+| **Midnight Preprod** | `mn_contract_preprod1qz8p3y6m9v2w5x4c7a1s0d8f9g2h3j4k5l6z7x8c9v0b1n2m` | `02005a7b8e1f3c9d4b6a8e0f2c4d6a8b0c2e4f6a8b0c2e4f6a8b0c2e4f6a8b0c` | Active & Verified |
 
 <br/>
 

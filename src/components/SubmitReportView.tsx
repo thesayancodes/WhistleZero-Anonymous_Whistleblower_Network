@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { 
-  Lock, 
-  FileText, 
-  Cpu, 
-  CheckCircle2, 
-  ShieldCheck, 
-  AlertCircle, 
-  Sparkles, 
-  ExternalLink, 
+import {
+  Lock,
+  FileText,
+  Cpu,
+  CheckCircle2,
+  ShieldCheck,
+  AlertCircle,
+  Sparkles,
+  ExternalLink,
   Layers,
   FileCheck,
   UploadCloud,
@@ -36,7 +36,7 @@ export const SubmitReportView: React.FC<SubmitReportViewProps> = ({ onCallCircui
   const [category, setCategory] = useState<string>('Corruption');
   const [evidenceText, setEvidenceText] = useState<string>('');
   const [credentialSecret, setCredentialSecret] = useState<string>('');
-  
+
   const [isGeneratingProof, setIsGeneratingProof] = useState<boolean>(false);
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
   const [txResult, setTxResult] = useState<{ txHash: string; evidenceHash: string } | null>(null);
@@ -74,7 +74,7 @@ export const SubmitReportView: React.FC<SubmitReportViewProps> = ({ onCallCircui
       // Animate progress steps
       await new Promise((r) => setTimeout(r, 600));
       setCurrentStepIndex(2);
-      
+
       await new Promise((r) => setTimeout(r, 1000));
       setCurrentStepIndex(3);
 
@@ -144,11 +144,10 @@ export const SubmitReportView: React.FC<SubmitReportViewProps> = ({ onCallCircui
                     key={cat}
                     type="button"
                     onClick={() => setCategory(cat)}
-                    className={`px-3 py-2 text-xs font-medium rounded-xl border transition-all text-left ${
-                      category === cat
+                    className={`px-3 py-2 text-xs font-medium rounded-xl border transition-all text-left ${category === cat
                         ? 'bg-zk/20 border-zk text-zk-light shadow-sm shadow-zk/20'
                         : 'bg-black/30 border-white/10 text-gray-400 hover:border-white/20'
-                    }`}
+                      }`}
                   >
                     {cat}
                   </button>
@@ -239,13 +238,12 @@ export const SubmitReportView: React.FC<SubmitReportViewProps> = ({ onCallCircui
                 return (
                   <div
                     key={stepNum}
-                    className={`p-3.5 rounded-xl border transition-all ${
-                      isCompleted
+                    className={`p-3.5 rounded-xl border transition-all ${isCompleted
                         ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
                         : isCurrent
-                        ? 'bg-zk/20 border-zk text-zk-light shadow-sm shadow-zk/20'
-                        : 'bg-black/20 border-white/5 text-gray-500'
-                    }`}
+                          ? 'bg-zk/20 border-zk text-zk-light shadow-sm shadow-zk/20'
+                          : 'bg-black/20 border-white/5 text-gray-500'
+                      }`}
                   >
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-semibold">{step.title}</span>

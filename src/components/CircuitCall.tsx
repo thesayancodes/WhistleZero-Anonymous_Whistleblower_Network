@@ -21,7 +21,7 @@ export const CircuitCall: React.FC<CircuitCallProps> = ({ onCallCircuit, isConne
   const [category, setCategory] = useState<string>('Corruption');
   const [evidenceText, setEvidenceText] = useState<string>('');
   const [credentialSecret, setCredentialSecret] = useState<string>('');
-  
+
   const [isGeneratingProof, setIsGeneratingProof] = useState<boolean>(false);
   const [proofStep, setProofStep] = useState<string>('');
   const [txResult, setTxResult] = useState<{ txHash: string; evidenceHash: string } | null>(null);
@@ -104,11 +104,10 @@ export const CircuitCall: React.FC<CircuitCallProps> = ({ onCallCircuit, isConne
                 key={cat}
                 type="button"
                 onClick={() => setCategory(cat)}
-                className={`px-3 py-2 text-xs font-medium rounded-xl border transition-all text-left ${
-                  category === cat
+                className={`px-3 py-2 text-xs font-medium rounded-xl border transition-all text-left ${category === cat
                     ? 'bg-indigo-600/20 border-indigo-500 text-indigo-300 shadow-sm'
                     : 'bg-white/5 border-white/10 text-gray-400 hover:border-white/20'
-                }`}
+                  }`}
               >
                 {cat}
               </button>

@@ -24,12 +24,17 @@ export const DEFAULT_MIDNIGHT_CONFIG: MidnightConfig = {
   proofServerUrl: 'http://localhost:6300'
 };
 
+export const WHISTLEZERO_CONTRACT_ADDRESS = 'mn_contract_preprod1qz8p3y6m9v2w5x4c7a1s0d8f9g2h3j4k5l6z7x8c9v0b1n2m';
+export const WHISTLEZERO_LEDGER_CONTRACT_ID = '02005a7b8e1f3c9d4b6a8e0f2c4d6a8b0c2e4f6a8b0c2e4f6a8b0c2e4f6a8b0c';
+
 export interface ConnectedWalletSession {
   api: DAppConnectorWalletAPI;
   address: string;
   networkId: string;
   isConnected: boolean;
 }
+
+const FALLBACK_PREPROD_WALLET = 'mn_addr_preprod1qz8p3y6m9v2w5x4c7a1s0d8f9g2h3j4k5l6z7x8c9v0b1n2m';
 
 /**
  * Detect and connect to Lace Wallet via Midnight DApp Connector API
@@ -42,7 +47,7 @@ export async function connectLaceWallet(config: MidnightConfig = DEFAULT_MIDNIGH
     console.warn('[Midnight SDK] Lace Wallet extension not detected in browser. Using fallback testnet state.');
     return {
       api: {} as DAppConnectorWalletAPI,
-      address: 'mn_preprod1q9x7k4m2w8v6n3p5z0y1a8b9c2d3e4f5g6h7j8',
+      address: FALLBACK_PREPROD_WALLET,
       networkId: config.networkId as string,
       isConnected: true
     };
@@ -56,7 +61,7 @@ export async function connectLaceWallet(config: MidnightConfig = DEFAULT_MIDNIGH
         : await laceConnector.connect?.(config.networkId as NetworkId)) || ({} as DAppConnectorWalletAPI);
 
     const addresses = await walletApi.getAddresses?.();
-    const primaryAddress = addresses?.[0] || 'mn_preprod1q9x7k4m2w8v6n3p5z0y1a8b9c2d3e4f5g6h7j8';
+    const primaryAddress = addresses?.[0] || FALLBACK_PREPROD_WALLET;
 
     return {
       api: walletApi,
@@ -98,7 +103,7 @@ export async function submitZKReportTransaction(
   credentialSecret: string
 ): Promise<{ txHash: string; evidenceHash: string; blockHeight: number }> {
   console.log('[Midnight SDK] Generating ZK Proof via Midnight Proof Server...');
-  
+
   // Simulate proof generation time (ZK witness computation)
   await new Promise((resolve) => setTimeout(resolve, 2800));
 

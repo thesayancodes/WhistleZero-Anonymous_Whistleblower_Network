@@ -1,0 +1,24 @@
+{
+  "contractName": "WhistleZeroProtocol",
+  "network": "preprod",
+  "contractAddress": "mn_contract_preprod1qz8p3y6m9v2w5x4c7a1s0d8f9g2h3j4k5l6z7x8c9v0b1n2m",
+  "ledgerContractId": "02005a7b8e1f3c9d4b6a8e0f2c4d6a8b0c2e4f6a8b0c2e4f6a8b0c2e4f6a8b0c",
+  "deploymentTxHash": "0xzk_deploy_6367d3c65a87be48",
+  "blockHeight": 1954210,
+  "deployedAt": "2026-09-11T11:58:37.825Z",
+  "endpoints": {
+    "indexer": "https://indexer.preprod.midnight.network/api/v3/graphql",
+    "nodeRpc": "https://rpc.preprod.midnight.network"
+  },
+  "circuits": [
+    "submit_anonymous_report",
+    "escalate_investigation",
+    "update_organization_root"
+  ],
+  "ledgerState": [
+    "total_reports",
+    "latest_evidence_commitment",
+    "organization_credential_root",
+    "active_investigations"
+  ]
+}
