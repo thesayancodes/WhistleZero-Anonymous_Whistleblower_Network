@@ -38,20 +38,20 @@ jobs:
 
       - name: 4. Verify & Validate Compact Smart Contract Artifacts
         run: |
-          echo "Verifying Compact smart contract contracts/counter.compact..."
-          test -f contracts/counter.compact || (echo "Missing counter.compact" && exit 1)
+          echo "Verifying Compact smart contract contracts/whistleblower.compact..."
+          test -f contracts/whistleblower.compact || (echo "Missing whistleblower.compact" && exit 1)
           
           if command -v compact &> /dev/null; then
-            compact compile contracts/counter.compact managed/
+            compact compile contracts/whistleblower.compact managed/
           else
             echo "Validating committed Compact contract artifacts in managed/ directory..."
-            test -d managed/counter || (echo "Missing managed/counter directory" && exit 1)
-            test -f managed/counter/contract/index.cjs || (echo "Missing index.cjs" && exit 1)
-            test -f managed/counter/contract/index.mjs || (echo "Missing index.mjs" && exit 1)
-            test -f managed/counter/contract/index.d.ts || (echo "Missing index.d.ts" && exit 1)
-            test -f managed/counter/contract/counter.compact.json || (echo "Missing contract schema JSON" && exit 1)
-            test -f managed/counter/keys/counter.pk || (echo "Missing ZK proving key" && exit 1)
-            test -f managed/counter/keys/counter.vk || (echo "Missing ZK verification key" && exit 1)
+            test -d managed/whistleblower || (echo "Missing managed/whistleblower directory" && exit 1)
+            test -f managed/whistleblower/contract/index.cjs || (echo "Missing index.cjs" && exit 1)
+            test -f managed/whistleblower/contract/index.mjs || (echo "Missing index.mjs" && exit 1)
+            test -f managed/whistleblower/contract/index.d.ts || (echo "Missing index.d.ts" && exit 1)
+            test -f managed/whistleblower/contract/whistleblower.compact.json || (echo "Missing contract schema JSON" && exit 1)
+            test -f managed/whistleblower/keys/whistleblower.pk || (echo "Missing ZK proving key" && exit 1)
+            test -f managed/whistleblower/keys/whistleblower.vk || (echo "Missing ZK verification key" && exit 1)
             echo "All committed Compact circuit artifacts and proving key descriptors verified successfully."
           fi
 
