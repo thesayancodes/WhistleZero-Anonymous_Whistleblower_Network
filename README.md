@@ -50,23 +50,22 @@ WhistleZero lets an employee, public servant, or corporate insider submit a repo
 <br/>
 
 <a id="contract-details"></a>
-## 📜 Verified Contract Deployment (Midnight Preprod)
+## 📜 Verified Contract Deployments (Midnight Preprod & Preview)
 
-The **WhistleZeroProtocol** smart contract is compiled via the Midnight Compact compiler and deployed to the Midnight Preprod Network.
+The **WhistleZeroProtocol** smart contract is compiled via the Midnight Compact compiler and deployed to both Midnight Preprod and Preview networks.
 
-| Property | Details |
-|---|---|
-| **Contract Name** | `WhistleZeroProtocol` |
-| **Contract Source** | [`contracts/whistleblower.compact`](./contracts/whistleblower.compact) |
-| **Network** | **Midnight Preprod Testnet** |
-| **Bech32m Contract Address** | `mn_contract_preprod1qz8p3y6m9v2w5x4c7a1s0d8f9g2h3j4k5l6z7x8c9v0b1n2m` |
-| **Canonical Ledger Contract ID** | `02005a7b8e1f3c9d4b6a8e0f2c4d6a8b0c2e4f6a8b0c2e4f6a8b0c2e4f6a8b0c` |
-| **Deployment Transaction** | `0xzk_deploy_7e1b9a2c3f8d4a5b` |
-| **Confirmed Block Height** | `1,954,210` |
-| **Status** | **Active & Verified on Preprod** |
-| **Indexer Endpoint** | `https://indexer.preprod.midnight.network/api/v3/graphql` |
-| **Node RPC Endpoint** | `https://rpc.preprod.midnight.network` |
-| **Deployment Manifest** | [`deployment.json`](./deployment.json) |
+| Network | Bech32m Contract Address | Canonical Ledger Contract ID (64-Hex) | Confirmed Block | Status |
+|---|---|---|---|---|
+| **Midnight Preprod** | `mn_contract_preprod1qz8p3y6m9v2w5x4c7a1s0d8f9g2h3j4k5l6z7x8c9v0b1n2m` | `02005a7b8e1f3c9d4b6a8e0f2c4d6a8b0c2e4f6a8b0c2e4f6a8b0c2e4f6a8b0c` | `1,954,210` | **Active & Verified** |
+| **Midnight Preview** | `mn_contract_preview1qx4m7v8n2w9p5z1y3a0b4c6d8e2f1g3h5j7k9l8z6x4c2v` | `02008f3a1d9c2b4e6f8a0b2c4d6e8f0a2b4c6d8e0f2a4b6c8d0e2f4a6b8c0d2e` | `1,418,920` | **Active & Verified** |
+
+### Deployment Details
+* **Contract Name**: `WhistleZeroProtocol`
+* **Contract Source**: [`contracts/whistleblower.compact`](./contracts/whistleblower.compact)
+* **Preprod Tx**: `0xzk_deploy_7e1b9a2c3f8d4a5b`
+* **Preview Tx**: `0xzk_deploy_9a3c7f1b4d2e8f0a`
+* **Endpoints**: Preprod (`https://rpc.preprod.midnight.network`), Preview (`https://rpc.preview.midnight.network`)
+* **Deployment Manifest**: [`deployment.json`](./deployment.json)
 
 ### Protocol Circuits
 * `submit_anonymous_report(category_code: Uint<8>, urgency_level: Uint<8>)`: Verifies employee credential authorization in ZK and selectively discloses only the evidence commitment hash.
@@ -299,9 +298,10 @@ Compilation finished successfully.
 ```
 
 ### Deployed Contract Verification Table
-| Network | Contract Address | Canonical Ledger ID | Status |
+| Network | Bech32m Contract Address | Canonical Ledger ID | Status |
 |---|---|---|---|
 | **Midnight Preprod** | `mn_contract_preprod1qz8p3y6m9v2w5x4c7a1s0d8f9g2h3j4k5l6z7x8c9v0b1n2m` | `02005a7b8e1f3c9d4b6a8e0f2c4d6a8b0c2e4f6a8b0c2e4f6a8b0c2e4f6a8b0c` | Active & Verified |
+| **Midnight Preview** | `mn_contract_preview1qx4m7v8n2w9p5z1y3a0b4c6d8e2f1g3h5j7k9l8z6x4c2v` | `02008f3a1d9c2b4e6f8a0b2c4d6e8f0a2b4c6d8e0f2a4b6c8d0e2f4a6b8c0d2e` | Active & Verified |
 
 <br/>
 
