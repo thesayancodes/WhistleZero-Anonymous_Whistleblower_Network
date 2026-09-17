@@ -223,32 +223,51 @@ npm run dev
 
 </details>
 
-## 🧪 Testing
+## 🧪 Comprehensive Automated Test Suites
+
+The protocol includes 3 comprehensive test suites covering ZK circuits, network connector integrations, and contract deployment registries:
 
 ```bash
 npm test
 ```
 
 <details open>
-<summary><b>Expected output</b></summary>
+<summary><b>Expected Vitest Output (17 Passed Tests across 3 Suites)</b></summary>
 <br/>
 
-```
-✓ tests/whistleblower.test.ts (6 tests)
-  ✓ 1. Contract Specification: verifies WhistleZeroProtocol schema and domain circuits
-  ✓ 2. Circuit Execution: verifies confidential report submission & selective disclosure
-  ✓ 3. State Transitions: accurately handles multiple report submissions and urgency routing
-  ✓ 4. Strict Privacy Guarantee: private credentials and tokens NEVER leak to public state or output
-  ✓ 5. Credential Enforcement: rejects reports with invalid or revoked credentials
-  ✓ 6. Governance & Root Updates: allows authorized root updates and investigation escalation
+```text
+ ✓ tests/deployment.test.ts (5 tests)
+   ✓ 1. validates primary contract metadata and default network
+   ✓ 2. validates verified Preprod testnet deployment parameters
+   ✓ 3. validates verified Preview testnet deployment parameters
+   ✓ 4. ensures all defined protocol circuits are registered
+   ✓ 5. ensures all public ledger state properties are accounted for
 
-Test Files  1 passed (1)
-     Tests  6 passed (6)
+ ✓ tests/whistleblower.test.ts (6 tests)
+   ✓ 1. Contract Specification: verifies WhistleZeroProtocol schema and domain circuits
+   ✓ 2. Circuit Execution: verifies confidential report submission & selective disclosure
+   ✓ 3. State Transitions: accurately handles multiple report submissions and urgency routing
+   ✓ 4. Strict Privacy Guarantee: private credentials and tokens NEVER leak to public state or output
+   ✓ 5. Credential Enforcement: rejects reports with invalid or revoked credentials
+   ✓ 6. Governance & Root Updates: allows authorized root updates and investigation escalation
+
+ ✓ tests/connector.test.ts (6 tests)
+   ✓ 1. verifies default Midnight testnet configuration
+   ✓ 2. verifies deployed contract identifiers and addresses format
+   ✓ 3. fallback wallet connection when Lace extension is not present
+   ✓ 4. initializes Midnight network provider with contract state reader
+   ✓ 5. generates valid ZK transaction proof structure via submitZKReportTransaction
+   ✓ 6. produces deterministic SHA-256 evidence commitment hash
+
+ Test Files  3 passed (3)
+      Tests  17 passed (17)
 ```
 
 </details>
 
-Test #4 is an automated, repeatable mathematical assertion of the core privacy guarantee, proving zero private witness fields are exposed.
+- **Privacy Invariance Assertion**: Test #4 in `whistleblower.test.ts` executes an automated, repeatable mathematical assertion of the zero-knowledge privacy guarantee, strictly ensuring zero private witness fields are exposed to public ledger state or serialized transaction outputs.
+- **Contract & Network Registry**: `deployment.test.ts` enforces that verified contract addresses, GraphQL indexers, and node RPC endpoints match on-chain ledger specifications across both Midnight Preprod and Preview networks.
+- **DApp Connector Integration**: `connector.test.ts` validates Lace DApp connector bindings, fallback testnet modes, and local proof generation workflows.
 
 ## ⚙️ CI/CD
 
