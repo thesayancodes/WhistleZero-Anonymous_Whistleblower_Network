@@ -101,7 +101,13 @@ export const App: React.FC = () => {
             />
           )}
 
-          {activeTab === 'settings' && <SettingsView />}
+          {activeTab === 'settings' && (
+            <SettingsView
+              selectedNetwork={selectedNetwork}
+              onNetworkChange={setSelectedNetwork}
+              contractAddress={activeContractAddress}
+            />
+          )}
         </div>
       </main>
     </div>
