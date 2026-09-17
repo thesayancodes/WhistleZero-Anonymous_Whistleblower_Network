@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { SearchCheck, ShieldCheck, CheckCircle2, Lock, ExternalLink, RefreshCw } from 'lucide-react';
 
-export const VerifyView: React.FC = () => {
+interface VerifyViewProps {
+  network?: string;
+  getExplorerUrl?: (txHash: string) => string;
+}
+
+export const VerifyView: React.FC<VerifyViewProps> = ({ network = 'preprod', getExplorerUrl }) => {
   const [searchHash, setSearchHash] = useState<string>('0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855');
   const [isVerifying, setIsVerifying] = useState<boolean>(false);
   const [verifiedRecord, setVerifiedRecord] = useState<any>({
@@ -45,7 +50,7 @@ export const VerifyView: React.FC = () => {
           Verify On-Chain Report Authenticity
         </h1>
         <p className="text-xs text-gray-400 mt-1 max-w-2xl">
-          Enter any evidence hash or transaction proof hash to audit zero-knowledge proof verification parameters on the Midnight Preprod testnet.
+          Enter any evidence hash or transaction proof hash to audit zero-knowledge proof verification parameters on the Midnight {network.toLowerCase().includes('preview') ? 'Preview' : 'Preprod'} testnet.
         </p>
 
         {/* Search Bar */}
@@ -97,7 +102,7 @@ export const VerifyView: React.FC = () => {
             </div>
 
             <a
-              href={`https://explorer.preprod.midnight.network/tx/${verifiedRecord.txHash}`}
+              href={getExplorerUrl ? getExplorerUrl(verifiedRecord.txHash) : `https://explorer.${network.toLowerCase().includes('preview') ? 'preview' : 'preprod'}.midnight.network/tx/${verifiedRecord.txHash}`}
               target="_blank"
               rel="noreferrer"
               className="btn-secondary text-xs"

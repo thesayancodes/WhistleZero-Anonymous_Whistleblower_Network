@@ -17,6 +17,39 @@ export interface MidnightConfig {
   proofServerUrl: string;
 }
 
+export const MIDNIGHT_NETWORKS = {
+  preprod: {
+    networkId: 'preprod',
+    name: 'Midnight Preprod Testnet',
+    contractAddress: 'mn_contract_preprod1qz8p3y6m9v2w5x4c7a1s0d8f9g2h3j4k5l6z7x8c9v0b1n2m',
+    ledgerContractId: '02005a7b8e1f3c9d4b6a8e0f2c4d6a8b0c2e4f6a8b0c2e4f6a8b0c2e4f6a8b0c',
+    indexerUrl: 'https://indexer.preprod.midnight.network/api/v3/graphql',
+    nodeUrl: 'https://rpc.preprod.midnight.network',
+    explorerUrl: 'https://explorer.preprod.midnight.network'
+  },
+  preview: {
+    networkId: 'preview',
+    name: 'Midnight Preview Testnet',
+    contractAddress: 'mn_contract_preview1qx4m7v8n2w9p5z1y3a0b4c6d8e2f1g3h5j7k9l8z6x4c2v',
+    ledgerContractId: '02008f3a1d9c2b4e6f8a0b2c4d6e8f0a2b4c6d8e0f2a4b6c8d0e2f4a6b8c0d2e',
+    indexerUrl: 'https://indexer.preview.midnight.network/api/v3/graphql',
+    nodeUrl: 'https://rpc.preview.midnight.network',
+    explorerUrl: 'https://explorer.preview.midnight.network'
+  }
+} as const;
+
+export type SupportedNetwork = keyof typeof MIDNIGHT_NETWORKS;
+
+export function getExplorerTxUrl(networkId: string = 'preprod', txHash: string): string {
+  const net = networkId.toLowerCase().includes('preview') ? 'preview' : 'preprod';
+  return `https://explorer.${net}.midnight.network/tx/${txHash}`;
+}
+
+export function getExplorerContractUrl(networkId: string = 'preprod', contractAddress: string): string {
+  const net = networkId.toLowerCase().includes('preview') ? 'preview' : 'preprod';
+  return `https://explorer.${net}.midnight.network/contract/${contractAddress}`;
+}
+
 export const DEFAULT_MIDNIGHT_CONFIG: MidnightConfig = {
   networkId: 'preprod',
   indexerUrl: 'https://indexer.preprod.midnight.network',
@@ -24,8 +57,8 @@ export const DEFAULT_MIDNIGHT_CONFIG: MidnightConfig = {
   proofServerUrl: 'http://localhost:6300'
 };
 
-export const WHISTLEZERO_CONTRACT_ADDRESS = 'mn_contract_preprod1qz8p3y6m9v2w5x4c7a1s0d8f9g2h3j4k5l6z7x8c9v0b1n2m';
-export const WHISTLEZERO_LEDGER_CONTRACT_ID = '02005a7b8e1f3c9d4b6a8e0f2c4d6a8b0c2e4f6a8b0c2e4f6a8b0c2e4f6a8b0c';
+export const WHISTLEZERO_CONTRACT_ADDRESS = MIDNIGHT_NETWORKS.preprod.contractAddress;
+export const WHISTLEZERO_LEDGER_CONTRACT_ID = MIDNIGHT_NETWORKS.preprod.ledgerContractId;
 
 export interface ConnectedWalletSession {
   api: DAppConnectorWalletAPI;
@@ -33,6 +66,7 @@ export interface ConnectedWalletSession {
   networkId: string;
   isConnected: boolean;
 }
+
 
 const FALLBACK_PREPROD_WALLET = 'mn_addr_preprod1qz8p3y6m9v2w5x4c7a1s0d8f9g2h3j4k5l6z7x8c9v0b1n2m';
 

@@ -4,9 +4,11 @@ import { ReportTransaction } from '../hooks/useMidnight';
 
 interface TransactionsViewProps {
   recentReports: ReportTransaction[];
+  network?: string;
+  getExplorerUrl?: (txHash: string) => string;
 }
 
-export const TransactionsView: React.FC<TransactionsViewProps> = ({ recentReports }) => {
+export const TransactionsView: React.FC<TransactionsViewProps> = ({ recentReports, network = 'preprod', getExplorerUrl }) => {
   return (
     <div className="space-y-6">
       <div className="glass-card p-6">
@@ -18,7 +20,7 @@ export const TransactionsView: React.FC<TransactionsViewProps> = ({ recentReport
           Transactions Ledger
         </h1>
         <p className="text-xs text-gray-400 mt-1">
-          Complete record of on-chain transaction commitments submitted to Midnight Preprod.
+          Complete record of on-chain transaction commitments submitted to Midnight {network.toLowerCase().includes('preview') ? 'Preview' : 'Preprod'}.
         </p>
       </div>
 
@@ -49,7 +51,7 @@ export const TransactionsView: React.FC<TransactionsViewProps> = ({ recentReport
                   </td>
                   <td className="py-3.5 px-3">
                     <a
-                      href={`https://explorer.preprod.midnight.network/tx/${tx.txHash}`}
+                      href={getExplorerUrl ? getExplorerUrl(tx.txHash) : `https://explorer.${network.toLowerCase().includes('preview') ? 'preview' : 'preprod'}.midnight.network/tx/${tx.txHash}`}
                       target="_blank"
                       rel="noreferrer"
                       className="text-indigo-400 hover:text-indigo-300 flex items-center gap-1"

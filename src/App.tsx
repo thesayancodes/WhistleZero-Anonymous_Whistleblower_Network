@@ -19,6 +19,11 @@ export const App: React.FC = () => {
     wallet,
     ledger,
     recentReports,
+    selectedNetwork,
+    setSelectedNetwork,
+    activeContractAddress,
+    getExplorerTxUrl,
+    getExplorerContractUrl,
     connectWallet,
     disconnectWallet,
     submitAnonymousReportCircuit
@@ -80,13 +85,21 @@ export const App: React.FC = () => {
             />
           )}
 
-          {activeTab === 'verify' && <VerifyView />}
+          {activeTab === 'verify' && (
+            <VerifyView network={selectedNetwork} getExplorerUrl={getExplorerTxUrl} />
+          )}
 
           {activeTab === 'activity' && <ActivityView recentReports={recentReports} />}
 
           {activeTab === 'analytics' && <AnalyticsView />}
 
-          {activeTab === 'transactions' && <TransactionsView recentReports={recentReports} />}
+          {activeTab === 'transactions' && (
+            <TransactionsView
+              recentReports={recentReports}
+              network={selectedNetwork}
+              getExplorerUrl={getExplorerTxUrl}
+            />
+          )}
 
           {activeTab === 'settings' && <SettingsView />}
         </div>

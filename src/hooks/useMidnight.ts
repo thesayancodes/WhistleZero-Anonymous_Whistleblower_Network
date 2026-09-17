@@ -3,7 +3,11 @@ import {
   connectLaceWallet,
   getMidnightNetworkProvider,
   submitZKReportTransaction,
-  DEFAULT_MIDNIGHT_CONFIG
+  DEFAULT_MIDNIGHT_CONFIG,
+  MIDNIGHT_NETWORKS,
+  SupportedNetwork,
+  getExplorerTxUrl,
+  getExplorerContractUrl
 } from '../midnight/connector';
 
 export interface WalletState {
@@ -28,6 +32,8 @@ export interface LedgerState {
 }
 
 export const useMidnight = () => {
+  const [selectedNetwork, setSelectedNetwork] = useState<SupportedNetwork>('preprod');
+
   const [wallet, setWallet] = useState<WalletState>({
     isConnected: false,
     isConnecting: false,
@@ -69,12 +75,18 @@ export const useMidnight = () => {
   const connectWallet = useCallback(async () => {
     setWallet((prev) => ({ ...prev, isConnecting: true, error: null }));
     try {
-      const session = await connectLaceWallet(DEFAULT_MIDNIGHT_CONFIG);
+      const netConfig = {
+        ...DEFAULT_MIDNIGHT_CONFIG,
+        networkId: selectedNetwork,
+        indexerUrl: MIDNIGHT_NETWORKS[selectedNetwork].indexerUrl,
+        nodeUrl: MIDNIGHT_NETWORKS[selectedNetwork].nodeUrl
+      };
+      const session = await connectLaceWallet(netConfig);
       setWallet({
         isConnected: session.isConnected,
         isConnecting: false,
         address: session.address,
-        network: session.networkId === 'preprod' ? 'Preprod' : 'Preview',
+        network: selectedNetwork === 'preprod' ? 'Preprod' : 'Preview',
         error: null
       });
     } catch (err: any) {
@@ -84,7 +96,7 @@ export const useMidnight = () => {
         error: err?.message || 'Failed to connect Lace wallet via Midnight DApp Connector API.'
       }));
     }
-  }, []);
+  }, [selectedNetwork]);
 
   // Disconnect Wallet
   const disconnectWallet = useCallback(() => {
@@ -92,10 +104,10 @@ export const useMidnight = () => {
       isConnected: false,
       isConnecting: false,
       address: null,
-      network: 'Preprod',
+      network: selectedNetwork === 'preprod' ? 'Preprod' : 'Preview',
       error: null
     });
-  }, []);
+  }, [selectedNetwork]);
 
   // Submit Anonymous Whistleblower Report via Midnight SDK Proof Provider
   const submitAnonymousReportCircuit = useCallback(
@@ -155,6 +167,11 @@ export const useMidnight = () => {
     wallet,
     ledger,
     recentReports,
+    selectedNetwork,
+    setSelectedNetwork,
+    activeContractAddress: MIDNIGHT_NETWORKS[selectedNetwork].contractAddress,
+    getExplorerTxUrl: (txHash: string) => getExplorerTxUrl(selectedNetwork, txHash),
+    getExplorerContractUrl: (contractAddr: string) => getExplorerContractUrl(selectedNetwork, contractAddr),
     connectWallet,
     disconnectWallet,
     submitAnonymousReportCircuit
