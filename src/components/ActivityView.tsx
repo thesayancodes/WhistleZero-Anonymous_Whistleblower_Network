@@ -74,7 +74,7 @@ export const ActivityView: React.FC<ActivityViewProps> = ({ recentReports }) => 
                 <ShieldCheck className="w-3.5 h-3.5" /> Legitimate Employee Proved
               </span>
               <a
-                href={`https://explorer.preprod.midnight.network/tx/${report.txHash}`}
+                href={`https://explorer.preprod.midnight.network/transactions/${report.txHash}`}
                 target="_blank"
                 rel="noreferrer"
                 className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-indigo-400 hover:text-indigo-300 transition"

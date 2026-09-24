@@ -102,7 +102,7 @@ export const VerifyView: React.FC<VerifyViewProps> = ({ network = 'preprod', get
             </div>
 
             <a
-              href={getExplorerUrl ? getExplorerUrl(verifiedRecord.txHash) : `https://explorer.${network.toLowerCase().includes('preview') ? 'preview' : 'preprod'}.midnight.network/tx/${verifiedRecord.txHash}`}
+              href={getExplorerUrl ? getExplorerUrl(verifiedRecord.txHash) : `https://explorer.${network.toLowerCase().includes('preview') ? 'preview' : 'preprod'}.midnight.network/transactions/${verifiedRecord.txHash}`}
               target="_blank"
               rel="noreferrer"
               className="btn-secondary text-xs"

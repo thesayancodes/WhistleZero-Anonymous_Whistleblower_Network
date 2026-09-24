@@ -235,7 +235,7 @@ export const CircuitCall: React.FC<CircuitCallProps> = ({ onCallCircuit, isConne
           <div className="flex items-center justify-between text-xs pt-1">
             <span className="text-gray-400">Public Ledger state updated automatically.</span>
             <a
-              href={`https://explorer.preprod.midnight.network/tx/${txResult.txHash}`}
+              href={`https://explorer.preprod.midnight.network/transactions/${txResult.txHash}`}
               target="_blank"
               rel="noreferrer"
               className="text-indigo-400 hover:text-indigo-300 inline-flex items-center gap-1 font-medium"
