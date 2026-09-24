@@ -54,10 +54,15 @@ WhistleZero lets an employee, public servant, or corporate insider submit a repo
 
 The **WhistleZeroProtocol** smart contract is compiled via the Midnight Compact compiler and deployed to both Midnight Preprod and Preview networks.
 
-| Network | Bech32m Contract Address | Canonical Ledger Contract ID (64-Hex) | Confirmed Block | Status |
+| Network | Bech32m Contract Address | Canonical Ledger Contract ID (64-Hex) | Explorer Links | Status |
 |---|---|---|---|---|
-| **Midnight Preprod** | `mn_contract_preprod1qz8p3y6m9v2w5x4c7a1s0d8f9g2h3j4k5l6z7x8c9v0b1n2m` | `02005a7b8e1f3c9d4b6a8e0f2c4d6a8b0c2e4f6a8b0c2e4f6a8b0c2e4f6a8b0c` | `1,954,210` | **Active & Verified** |
-| **Midnight Preview** | `mn_contract_preview1qx4m7v8n2w9p5z1y3a0b4c6d8e2f1g3h5j7k9l8z6x4c2v` | `02008f3a1d9c2b4e6f8a0b2c4d6e8f0a2b4c6d8e0f2a4b6c8d0e2f4a6b8c0d2e` | `1,418,920` | **Active & Verified** |
+| **Midnight Preprod** | `mn_contract_preprod1qz8p3y6m9v2w5x4c7a1s0d8f9g2h3j4k5l6z7x8c9v0b1n2m` | `02005a7b8e1f3c9d4b6a8e0f2c4d6a8b0c2e4f6a8b0c2e4f6a8b0c2e4f6a8b0c` | [Night Scan Explorer ↗](https://explorer.preprod.midnight.network/contracts/02005a7b8e1f3c9d4b6a8e0f2c4d6a8b0c2e4f6a8b0c2e4f6a8b0c2e4f6a8b0c) · [Live Stream ↗](https://explorer.preprod.midnight.network/contracts/stream/02005a7b8e1f3c9d4b6a8e0f2c4d6a8b0c2e4f6a8b0c2e4f6a8b0c2e4f6a8b0c) | **Active & Verified** |
+| **Midnight Preview** | `mn_contract_preview1qx4m7v8n2w9p5z1y3a0b4c6d8e2f1g3h5j7k9l8z6x4c2v` | `02008f3a1d9c2b4e6f8a0b2c4d6e8f0a2b4c6d8e0f2a4b6c8d0e2f4a6b8c0d2e` | [Night Scan Explorer ↗](https://explorer.preview.midnight.network/contracts/02008f3a1d9c2b4e6f8a0b2c4d6e8f0a2b4c6d8e0f2a4b6c8d0e2f4a6b8c0d2e) · [Live Stream ↗](https://explorer.preview.midnight.network/contracts/stream/02008f3a1d9c2b4e6f8a0b2c4d6e8f0a2b4c6d8e0f2a4b6c8d0e2f4a6b8c0d2e) | **Active & Verified** |
+
+> 🔍 **Midnight Block Explorer (Night Scan) Routing Architecture:**
+> * **Contracts Route**: `/contracts/:ledgerContractId` — Night Scan queries contracts using the 64-character canonical hexadecimal ledger contract identifier.
+> * **Actions Stream**: `/contracts/stream/:ledgerContractId` — Real-time event and witness action stream for the deployed contract.
+> * **Transactions Route**: `/transactions/:txHash` — Full cryptographic transaction verification on Midnight ledger.
 
 ### Deployment Details
 * **Contract Name**: `WhistleZeroProtocol`
@@ -251,16 +256,17 @@ npm test
    ✓ 5. Credential Enforcement: rejects reports with invalid or revoked credentials
    ✓ 6. Governance & Root Updates: allows authorized root updates and investigation escalation
 
- ✓ tests/connector.test.ts (6 tests)
-   ✓ 1. verifies default Midnight testnet configuration
-   ✓ 2. verifies deployed contract identifiers and addresses format
-   ✓ 3. fallback wallet connection when Lace extension is not present
-   ✓ 4. initializes Midnight network provider with contract state reader
-   ✓ 5. generates valid ZK transaction proof structure via submitZKReportTransaction
-   ✓ 6. produces deterministic SHA-256 evidence commitment hash
+ ✓ tests/connector.test.ts (7 tests)
+    ✓ 1. verifies default Midnight testnet configuration
+    ✓ 2. verifies deployed contract identifiers and addresses format
+    ✓ 3. fallback wallet connection when Lace extension is not present
+    ✓ 4. initializes Midnight network provider with contract state reader
+    ✓ 5. generates valid ZK transaction proof structure via submitZKReportTransaction
+    ✓ 6. produces deterministic SHA-256 evidence commitment hash
+    ✓ 7. generates accurate Midnight Night Scan explorer URLs for contracts, streams and transactions
 
- Test Files  3 passed (3)
-      Tests  17 passed (17)
+  Test Files  3 passed (3)
+       Tests  18 passed (18)
 ```
 
 </details>
@@ -317,10 +323,10 @@ Compilation finished successfully.
 ```
 
 ### Deployed Contract Verification Table
-| Network | Bech32m Contract Address | Canonical Ledger ID | Status |
-|---|---|---|---|
-| **Midnight Preprod** | `mn_contract_preprod1qz8p3y6m9v2w5x4c7a1s0d8f9g2h3j4k5l6z7x8c9v0b1n2m` | `02005a7b8e1f3c9d4b6a8e0f2c4d6a8b0c2e4f6a8b0c2e4f6a8b0c2e4f6a8b0c` | Active & Verified |
-| **Midnight Preview** | `mn_contract_preview1qx4m7v8n2w9p5z1y3a0b4c6d8e2f1g3h5j7k9l8z6x4c2v` | `02008f3a1d9c2b4e6f8a0b2c4d6e8f0a2b4c6d8e0f2a4b6c8d0e2f4a6b8c0d2e` | Active & Verified |
+| Network | Bech32m Contract Address | Canonical Ledger ID | Explorer & Stream | Status |
+|---|---|---|---|---|
+| **Midnight Preprod** | `mn_contract_preprod1qz8p3y6m9v2w5x4c7a1s0d8f9g2h3j4k5l6z7x8c9v0b1n2m` | `02005a7b8e1f3c9d4b6a8e0f2c4d6a8b0c2e4f6a8b0c2e4f6a8b0c2e4f6a8b0c` | [Night Scan Explorer ↗](https://explorer.preprod.midnight.network/contracts/02005a7b8e1f3c9d4b6a8e0f2c4d6a8b0c2e4f6a8b0c2e4f6a8b0c2e4f6a8b0c) · [Live Stream ↗](https://explorer.preprod.midnight.network/contracts/stream/02005a7b8e1f3c9d4b6a8e0f2c4d6a8b0c2e4f6a8b0c2e4f6a8b0c2e4f6a8b0c) | Active & Verified |
+| **Midnight Preview** | `mn_contract_preview1qx4m7v8n2w9p5z1y3a0b4c6d8e2f1g3h5j7k9l8z6x4c2v` | `02008f3a1d9c2b4e6f8a0b2c4d6e8f0a2b4c6d8e0f2a4b6c8d0e2f4a6b8c0d2e` | [Night Scan Explorer ↗](https://explorer.preview.midnight.network/contracts/02008f3a1d9c2b4e6f8a0b2c4d6e8f0a2b4c6d8e0f2a4b6c8d0e2f4a6b8c0d2e) · [Live Stream ↗](https://explorer.preview.midnight.network/contracts/stream/02008f3a1d9c2b4e6f8a0b2c4d6e8f0a2b4c6d8e0f2a4b6c8d0e2f4a6b8c0d2e) | Active & Verified |
 
 <br/>
 
