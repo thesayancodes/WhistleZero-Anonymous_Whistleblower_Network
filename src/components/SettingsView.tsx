@@ -12,7 +12,7 @@ import {
   FileCode2,
   Server
 } from 'lucide-react';
-import { MIDNIGHT_NETWORKS, SupportedNetwork, getExplorerContractUrl } from '../midnight/connector';
+import { MIDNIGHT_NETWORKS, SupportedNetwork, getExplorerContractUrl, getExplorerContractStreamUrl } from '../midnight/connector';
 
 interface SettingsViewProps {
   selectedNetwork?: SupportedNetwork;
@@ -116,12 +116,12 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
         </div>
 
         {/* Live Contract Diagnostic Details */}
-        <div className="p-4 bg-black/40 rounded-xl border border-white/5 space-y-3">
+        <div className="p-4 bg-black/40 rounded-xl border border-white/5 space-y-4">
           <div>
             <div className="flex items-center justify-between mb-1">
               <span className="font-semibold text-gray-300 flex items-center gap-1.5">
                 <FileCode2 className="w-3.5 h-3.5 text-cyber" />
-                Deployed WhistleZero Contract Address
+                Deployed WhistleZero Contract Address (Bech32m)
               </span>
               <div className="flex items-center gap-2">
                 <button
@@ -141,6 +141,16 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
                   <span>Explorer</span>
                   <ExternalLink className="w-3 h-3" />
                 </a>
+                <a
+                  href={getExplorerContractStreamUrl(selectedNetwork, activeContract)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-indigo-400 hover:underline flex items-center gap-1 text-[11px]"
+                  title="View Contract Actions Stream"
+                >
+                  <span>Stream</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
               </div>
             </div>
             <input
@@ -148,6 +158,40 @@ export const SettingsView: React.FC<SettingsViewProps> = ({
               readOnly
               value={activeContract}
               className="w-full bg-black/60 border border-white/10 rounded-lg p-2.5 font-mono text-zk-light select-all"
+            />
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between mb-1">
+              <span className="font-semibold text-gray-300 flex items-center gap-1.5">
+                <Shield className="w-3.5 h-3.5 text-emerald-400" />
+                Canonical Ledger Contract ID (Hex)
+              </span>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => copyToClipboard(activeConfig.ledgerContractId, 'ledgerId')}
+                  className="text-[#8A8FA3] hover:text-white flex items-center gap-1 transition text-[11px]"
+                >
+                  <Copy className="w-3 h-3" />
+                  <span>{copiedField === 'ledgerId' ? 'Copied!' : 'Copy'}</span>
+                </button>
+                <a
+                  href={getExplorerContractUrl(selectedNetwork, activeConfig.ledgerContractId)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-zk-glow hover:underline flex items-center gap-1 text-[11px]"
+                >
+                  <span>Explorer</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
+            </div>
+            <input
+              type="text"
+              readOnly
+              value={activeConfig.ledgerContractId}
+              className="w-full bg-black/60 border border-white/10 rounded-lg p-2.5 font-mono text-emerald-300/90 select-all"
             />
           </div>
 
