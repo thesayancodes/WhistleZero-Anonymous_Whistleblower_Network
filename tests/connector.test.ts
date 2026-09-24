@@ -5,7 +5,10 @@ import {
   WHISTLEZERO_LEDGER_CONTRACT_ID,
   connectLaceWallet,
   getMidnightNetworkProvider,
-  submitZKReportTransaction
+  submitZKReportTransaction,
+  getExplorerTxUrl,
+  getExplorerContractUrl,
+  getExplorerContractStreamUrl
 } from '../src/midnight/connector';
 
 describe('Midnight Connector & Configuration Test Suite', () => {
@@ -64,5 +67,19 @@ describe('Midnight Connector & Configuration Test Suite', () => {
 
     expect(computedHash).toMatch(/^0x[0-9a-f]{64}$/);
     expect(computedHash.length).toBe(66);
+  });
+
+  it('7. generates accurate Midnight Night Scan explorer URLs for contracts, streams and transactions', () => {
+    const txUrl = getExplorerTxUrl('preprod', '0x123abc');
+    expect(txUrl).toBe('https://explorer.preprod.midnight.network/transactions/0x123abc');
+
+    const contractUrl = getExplorerContractUrl('preprod', WHISTLEZERO_CONTRACT_ADDRESS);
+    expect(contractUrl).toBe(`https://explorer.preprod.midnight.network/contracts/${WHISTLEZERO_LEDGER_CONTRACT_ID}`);
+
+    const streamUrl = getExplorerContractStreamUrl('preprod', WHISTLEZERO_CONTRACT_ADDRESS);
+    expect(streamUrl).toBe(`https://explorer.preprod.midnight.network/contracts/stream/${WHISTLEZERO_LEDGER_CONTRACT_ID}`);
+
+    const previewContractUrl = getExplorerContractUrl('preview');
+    expect(previewContractUrl).toContain('explorer.preview.midnight.network/contracts/');
   });
 });
