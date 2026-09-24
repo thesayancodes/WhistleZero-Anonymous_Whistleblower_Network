@@ -42,12 +42,30 @@ export type SupportedNetwork = keyof typeof MIDNIGHT_NETWORKS;
 
 export function getExplorerTxUrl(networkId: string = 'preprod', txHash: string): string {
   const net = networkId.toLowerCase().includes('preview') ? 'preview' : 'preprod';
-  return `https://explorer.${net}.midnight.network/tx/${txHash}`;
+  return `https://explorer.${net}.midnight.network/transactions/${txHash}`;
 }
 
-export function getExplorerContractUrl(networkId: string = 'preprod', contractAddress: string): string {
+export function getExplorerContractUrl(networkId: string = 'preprod', contractAddress?: string): string {
   const net = networkId.toLowerCase().includes('preview') ? 'preview' : 'preprod';
-  return `https://explorer.${net}.midnight.network/contract/${contractAddress}`;
+  const networkKey = net as keyof typeof MIDNIGHT_NETWORKS;
+  const config = MIDNIGHT_NETWORKS[networkKey];
+  // Midnight Night Scan explorer contract queries expect the canonical 64-char hex ledger identifier
+  let target = contractAddress;
+  if (!target || (config && target === config.contractAddress)) {
+    target = config?.ledgerContractId || target;
+  }
+  return `https://explorer.${net}.midnight.network/contracts/${target}`;
+}
+
+export function getExplorerContractStreamUrl(networkId: string = 'preprod', contractAddress?: string): string {
+  const net = networkId.toLowerCase().includes('preview') ? 'preview' : 'preprod';
+  const networkKey = net as keyof typeof MIDNIGHT_NETWORKS;
+  const config = MIDNIGHT_NETWORKS[networkKey];
+  let target = contractAddress;
+  if (!target || (config && target === config.contractAddress)) {
+    target = config?.ledgerContractId || target;
+  }
+  return `https://explorer.${net}.midnight.network/contracts/stream/${target}`;
 }
 
 export const DEFAULT_MIDNIGHT_CONFIG: MidnightConfig = {
