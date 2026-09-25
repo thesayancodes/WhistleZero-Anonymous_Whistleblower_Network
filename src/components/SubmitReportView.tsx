@@ -12,7 +12,8 @@ import {
   FileCheck,
   UploadCloud,
   Check,
-  Globe
+  Globe,
+  Copy
 } from 'lucide-react';
 import { WalletState } from '../hooks/useMidnight';
 
@@ -22,6 +23,8 @@ interface SubmitReportViewProps {
     evidenceHash: string;
   }>;
   wallet: WalletState;
+  network?: string;
+  getExplorerUrl?: (txHash: string) => string;
 }
 
 const CATEGORIES = [
@@ -32,7 +35,12 @@ const CATEGORIES = [
   'Government Misconduct'
 ];
 
-export const SubmitReportView: React.FC<SubmitReportViewProps> = ({ onCallCircuit, wallet }) => {
+export const SubmitReportView: React.FC<SubmitReportViewProps> = ({
+  onCallCircuit,
+  wallet,
+  network = 'preprod',
+  getExplorerUrl
+}) => {
   const [category, setCategory] = useState<string>('Corruption');
   const [evidenceText, setEvidenceText] = useState<string>('');
   const [credentialSecret, setCredentialSecret] = useState<string>('');
@@ -40,7 +48,16 @@ export const SubmitReportView: React.FC<SubmitReportViewProps> = ({ onCallCircui
   const [isGeneratingProof, setIsGeneratingProof] = useState<boolean>(false);
   const [currentStepIndex, setCurrentStepIndex] = useState<number>(0);
   const [txResult, setTxResult] = useState<{ txHash: string; evidenceHash: string } | null>(null);
+  const [copiedField, setCopiedField] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+
+  const handleCopy = (text: string, field: string) => {
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard.writeText(text);
+      setCopiedField(field);
+      setTimeout(() => setCopiedField(null), 2000);
+    }
+  };
 
   const steps = [
     { title: '1. Private Witness Constraint Vector', desc: 'Encoding employee secret witness into ZK domain' },
@@ -261,18 +278,57 @@ export const SubmitReportView: React.FC<SubmitReportViewProps> = ({ onCallCircui
 
           {/* Success Box if Completed */}
           {txResult && (
-            <div className="mt-4 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 space-y-2 animate-in fade-in">
-              <div className="flex items-center gap-2 font-bold text-xs">
-                <CheckCircle2 className="w-4 h-4" />
-                <span>On-Chain Commitment Confirmed!</span>
+            <div className="mt-4 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 space-y-3 animate-in fade-in">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 font-bold text-xs">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  <span>On-Chain Commitment Confirmed!</span>
+                </div>
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase">
+                  {network}
+                </span>
               </div>
-              <div className="text-[10px] font-mono space-y-1 text-emerald-300">
-                <div className="truncate">
-                  Evidence: <strong className="text-white">{txResult.evidenceHash}</strong>
+
+              <div className="text-[10px] font-mono space-y-2 bg-black/40 p-3 rounded-lg border border-emerald-500/20">
+                <div className="flex items-center justify-between gap-2">
+                  <div className="truncate flex-1">
+                    <span className="text-gray-400">Evidence:</span> <strong className="text-white">{txResult.evidenceHash}</strong>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleCopy(txResult.evidenceHash, 'evidence')}
+                    className="p-1 hover:text-white transition text-emerald-400"
+                    title="Copy Evidence Hash"
+                  >
+                    {copiedField === 'evidence' ? <Check className="w-3.5 h-3.5 text-emerald-300" /> : <Copy className="w-3.5 h-3.5" />}
+                  </button>
                 </div>
-                <div className="truncate">
-                  Tx Proof: <strong className="text-white">{txResult.txHash}</strong>
+
+                <div className="flex items-center justify-between gap-2">
+                  <div className="truncate flex-1">
+                    <span className="text-gray-400">Tx Proof:</span> <strong className="text-white">{txResult.txHash}</strong>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleCopy(txResult.txHash, 'tx')}
+                    className="p-1 hover:text-white transition text-emerald-400"
+                    title="Copy Transaction Hash"
+                  >
+                    {copiedField === 'tx' ? <Check className="w-3.5 h-3.5 text-emerald-300" /> : <Copy className="w-3.5 h-3.5" />}
+                  </button>
                 </div>
+              </div>
+
+              <div className="flex items-center justify-end pt-1">
+                <a
+                  href={getExplorerUrl ? getExplorerUrl(txResult.txHash) : `https://explorer.preprod.midnight.network/transactions/${txResult.txHash}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 text-xs font-semibold border border-emerald-500/30 transition"
+                >
+                  <span>View On Night Scan Explorer</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
               </div>
             </div>
           )}

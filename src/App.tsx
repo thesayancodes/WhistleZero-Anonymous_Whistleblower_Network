@@ -82,6 +82,8 @@ export const App: React.FC = () => {
             <SubmitReportView
               onCallCircuit={submitAnonymousReportCircuit}
               wallet={wallet}
+              network={selectedNetwork}
+              getExplorerUrl={getExplorerTxUrl}
             />
           )}
 
