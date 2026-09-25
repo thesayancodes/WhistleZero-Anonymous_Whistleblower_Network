@@ -1,18 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { WalletState } from '../hooks/useMidnight';
-import { Shield, Wallet, LogOut, AlertCircle, CheckCircle2, RefreshCw } from 'lucide-react';
+import { Shield, Wallet, LogOut, AlertCircle, CheckCircle2, RefreshCw, Copy, Check, ExternalLink } from 'lucide-react';
+import { SupportedNetwork, MIDNIGHT_NETWORKS } from '../midnight/connector';
 
 interface WalletConnectProps {
   wallet: WalletState;
   onConnect: () => void;
   onDisconnect: () => void;
+  selectedNetwork?: SupportedNetwork;
 }
 
 export const WalletConnect: React.FC<WalletConnectProps> = ({
   wallet,
   onConnect,
-  onDisconnect
+  onDisconnect,
+  selectedNetwork = 'preprod'
 }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyAddress = (addr: string) => {
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard.writeText(addr);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  const networkKey = (selectedNetwork || (wallet.network.toLowerCase().includes('preview') ? 'preview' : 'preprod')) as SupportedNetwork;
+  const explorerBase = MIDNIGHT_NETWORKS[networkKey]?.explorerUrl || 'https://explorer.preprod.midnight.network';
+
   return (
     <div className="glass-card p-5 mb-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
@@ -29,7 +45,7 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({
               </span>
             </div>
             <p className="text-xs text-gray-400">
-              Zero-Knowledge Credential Provider
+              Zero-Knowledge Credential Provider • Compact Runtime Connected
             </p>
           </div>
         </div>
@@ -37,20 +53,39 @@ export const WalletConnect: React.FC<WalletConnectProps> = ({
         {/* Action Controls */}
         <div className="flex items-center gap-3">
           {wallet.isConnected && wallet.address ? (
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 px-4 py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-400 text-sm font-mono">
+            <div className="flex flex-wrap items-center gap-2">
+              <div className="flex items-center gap-2 px-3 py-1.5 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-emerald-400 text-xs font-mono">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                 <span>
-                  {wallet.address.substring(0, 10)}...{wallet.address.substring(wallet.address.length - 6)}
+                  {wallet.address.substring(0, 12)}...{wallet.address.substring(wallet.address.length - 6)}
                 </span>
+                <button
+                  type="button"
+                  onClick={() => handleCopyAddress(wallet.address!)}
+                  className="p-1 hover:text-white transition"
+                  title="Copy Wallet Address"
+                >
+                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-300" /> : <Copy className="w-3.5 h-3.5" />}
+                </button>
               </div>
+
+              <a
+                href={explorerBase}
+                target="_blank"
+                rel="noreferrer"
+                className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-white/10 transition"
+                title={`Open Midnight ${wallet.network} Explorer`}
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+              </a>
+
               <button
                 id="wallet-disconnect-btn"
                 onClick={onDisconnect}
-                className="btn-secondary text-red-400 hover:text-red-300 hover:border-red-500/30"
+                className="btn-secondary text-red-400 hover:text-red-300 hover:border-red-500/30 text-xs py-1.5 px-3"
                 title="Disconnect Wallet"
               >
-                <LogOut className="w-4 h-4" />
+                <LogOut className="w-3.5 h-3.5" />
                 <span>Disconnect</span>
               </button>
             </div>
