@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -30,17 +30,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: 'npm'
 
       - name: 3. Install dependencies
-        run: |
-          npm install --legacy-peer-deps
-          chmod -R +x node_modules/.bin || true
+        run: npm install --legacy-peer-deps
 
       - name: 4. Verify & Validate Compact Smart Contract Artifacts
         run: |
           echo "Verifying Compact smart contract contracts/whistleblower.compact..."
           test -f contracts/whistleblower.compact || (echo "Missing whistleblower.compact" && exit 1)
-          
+
           if command -v compact &> /dev/null; then
             compact compile contracts/whistleblower.compact managed/
           else
@@ -56,23 +55,12 @@ jobs:
           fi
 
       - name: 5. Run test suite
-        run: |
-          chmod -R +x node_modules/.bin || true
-          npx vitest run
+        run: npx vitest run
 
       - name: 6. Build production frontend
-        run: |
-          chmod -R +x node_modules/.bin || true
-          npm run build
+        run: npm run build
 
-      - name: 7. Deploy to gh-pages branch (backup / branch deployment)
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-
-      - name: 8. Upload GitHub Pages Artifact
+      - name: 7. Upload GitHub Pages Artifact
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
         uses: actions/upload-pages-artifact@v3
         with:
