@@ -5,10 +5,21 @@ import { WalletState } from '../hooks/useMidnight';
 interface TopNavProps {
   wallet: WalletState;
   collapsed: boolean;
+  selectedNetwork?: string;
+  contractExplorerUrl?: string;
   onNavigateHome?: () => void;
 }
 
-export const TopNav: React.FC<TopNavProps> = ({ wallet, collapsed, onNavigateHome }) => {
+export const TopNav: React.FC<TopNavProps> = ({
+  wallet,
+  collapsed,
+  selectedNetwork = 'preprod',
+  contractExplorerUrl,
+  onNavigateHome
+}) => {
+  const networkSlug = (selectedNetwork || wallet.network).toLowerCase().includes('preview') ? 'preview' : 'preprod';
+  const explorerUrl = contractExplorerUrl || `https://explorer.${networkSlug}.midnight.network/`;
+
   return (
     <header
       className={`h-16 fixed top-0 right-0 z-30 bg-space-950/85 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-6 transition-all duration-300 ${
@@ -46,18 +57,19 @@ export const TopNav: React.FC<TopNavProps> = ({ wallet, collapsed, onNavigateHom
         {/* Network Badge */}
         <div className="flex items-center gap-2 px-3 py-1.5 bg-cyber/10 border border-cyber/20 rounded-xl text-xs font-semibold text-cyber">
           <span className="w-2 h-2 rounded-full bg-cyber animate-ping" />
-          <span>{wallet.network} Testnet</span>
+          <span>{networkSlug === 'preview' ? 'Preview' : 'Preprod'} Testnet</span>
         </div>
 
         {/* Explorer Quick Link */}
         <a
-          href="https://explorer.preprod.midnight.network/"
+          href={explorerUrl}
           target="_blank"
           rel="noreferrer"
-          className="p-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-white/10 transition"
-          title="Midnight Explorer"
+          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white border border-white/10 text-xs font-mono transition"
+          title={`Midnight Night Scan (${networkSlug}) Explorer`}
         >
-          <ExternalLink className="w-4 h-4" />
+          <span className="hidden md:inline">Night Scan</span>
+          <ExternalLink className="w-3.5 h-3.5" />
         </a>
       </div>
     </header>
